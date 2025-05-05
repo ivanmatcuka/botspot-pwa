@@ -1,7 +1,6 @@
 import { getPosts } from '@/actions/getPosts';
 import { Posts, WPBlocks } from '@/components/WPBlocks';
 import { getComponentBySlug } from '@/services/getComponentBySlug';
-import { getPage } from '@/services/getPage';
 import { getPostBySlug } from '@/services/getPostBySlug';
 import { generateSeo } from '@/utils/generateSeo';
 import { getFeaturedImageUrl } from '@/utils/getFeaturedImageUrl';
