@@ -53,6 +53,22 @@ const ProductsList: FC<ComponentProps<typeof botspot.ProductsList>> = async (
   return <botspot.ProductsList {...props} products={data} />;
 };
 
+const wpToMuiVariant: Record<
+  string,
+  ComponentProps<typeof botspot.Typography>['variant']
+> = {
+  button: 'button',
+  caption: 'caption',
+  h1: 'h1',
+  h2: 'h2',
+  h3: 'h3',
+  h4: 'h4',
+  h5: 'h5',
+  h6: 'h5',
+  medium: 'body1',
+  paragraph: 'body1',
+};
+
 const componentMap: Partial<ComponentMap> = {
   'ui/banner': botspot.Banner,
   'ui/button': NextButton,
@@ -75,6 +91,37 @@ const componentMap: Partial<ComponentMap> = {
   'ui/skeleton-video': botspot.SkeletonVideo,
   'ui/tile': botspot.Tile,
   'ui/typography': botspot.Typography,
+
+  // Core
+  'core/heading': ({
+    content,
+    level = 2,
+  }: {
+    content: string;
+    level?: number;
+  }) => {
+    const variant = wpToMuiVariant[`h${level}`] || 'h2';
+    return (
+      <botspot.Typography
+        dangerouslySetInnerHTML={{ __html: content }}
+        variant={variant}
+      />
+    );
+  },
+  'core/paragraph': ({
+    content,
+    fontSize,
+  }: {
+    content: string;
+    fontSize: string;
+  }) => {
+    return (
+      <botspot.Typography
+        dangerouslySetInnerHTML={{ __html: content }}
+        variant={wpToMuiVariant[fontSize]}
+      />
+    );
+  },
 };
 
 type WPBlocksProps = {

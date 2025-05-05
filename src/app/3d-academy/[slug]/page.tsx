@@ -1,16 +1,11 @@
 import { getPosts } from '@/actions/getPosts';
 import { Posts, WPBlocks } from '@/components/WPBlocks';
+import { getComponentBySlug } from '@/services/getComponentBySlug';
 import { getPage } from '@/services/getPage';
 import { getPostBySlug } from '@/services/getPostBySlug';
 import { generateSeo } from '@/utils/generateSeo';
 import { getFeaturedImageUrl } from '@/utils/getFeaturedImageUrl';
-import {
-  Box,
-  LegacyPostContainer,
-  LoadingSkeletons,
-  PageContainer,
-  Typography,
-} from '@botspot/ui';
+import { Box, LoadingSkeletons, PageContainer, Typography } from '@botspot/ui';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
@@ -43,7 +38,7 @@ export default async function Post({
   const slug = (await params).slug;
   const [post, page] = await Promise.all([
     getPostBySlug(slug),
-    getPage(POST_SOCIAL_MEDIA_PAGE_SLUG),
+    getComponentBySlug(POST_SOCIAL_MEDIA_PAGE_SLUG),
   ]);
 
   if (!post) return notFound();
@@ -52,7 +47,7 @@ export default async function Post({
   const blocks = page?.block_data;
 
   return (
-    <LegacyPostContainer>
+    <main>
       <PageContainer>
         <Box maxWidth="100%" mx="auto" my={{ md: 15, xs: 8 }}>
           {featuredImage && (
@@ -72,10 +67,7 @@ export default async function Post({
             variant="h1"
           />
           <Typography>{post.excerpt.protected}</Typography>
-          <Box
-            dangerouslySetInnerHTML={{ __html: post.content.rendered }}
-            mb={{ md: 10, xs: 5 }}
-          />
+          {post.block_data && <WPBlocks blocks={post.block_data} />}
         </Box>
       </PageContainer>
 
@@ -106,6 +98,6 @@ export default async function Post({
           </Suspense>
         </Box>
       </PageContainer>
-    </LegacyPostContainer>
+    </main>
   );
 }

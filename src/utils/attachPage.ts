@@ -14,6 +14,7 @@ export const attachPage = (
   };
 
   const link = page.acf?.['parent-page'] ?? '';
+
   const parent = navbarItems.find(
     (item) => normalizeURL(item.href) === normalizeURL(link),
   );

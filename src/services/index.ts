@@ -19,7 +19,9 @@ export type WPComponentNames =
   | 'ui/dynamic-form'
   | 'ui/download-area-content'
   | 'ui/products-topic'
-  | 'ui/products-list';
+  | 'ui/products-list'
+  | 'core/heading'
+  | 'core/paragraph';
 
 export type Block = {
   attrs: unknown;

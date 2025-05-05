@@ -1,7 +1,6 @@
 import { WPBlocks } from '@/components/WPBlocks';
 import { getPage } from '@/services/getPage';
 import { generatePageMetadata } from '@/utils/generatePageMetadata';
-import { LegacyPostContainer } from '@botspot/ui';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
@@ -28,8 +27,6 @@ export default async function Page({
   const blocks = page.block_data;
 
   return (
-    <LegacyPostContainer className="w-full">
-      {blocks && <WPBlocks blocks={blocks} />}
-    </LegacyPostContainer>
+    <main className="w-full">{blocks && <WPBlocks blocks={blocks} />}</main>
   );
 }

@@ -10,25 +10,25 @@ export type Link = {
 export const createDataTree = (dataset: MenuItem[]) => {
   const hashTable: Record<string, Link> = Object.create(null);
 
-  dataset.forEach(
-    (data) =>
-      (hashTable[data.ID] = {
-        children: [],
-        href: normalizeURL(data.url),
-        label: data.title,
-      }),
-  );
+  // Initially populating the structure
+  for (const data of dataset) {
+    hashTable[data.ID] = {
+      children: [],
+      href: normalizeURL(data.url),
+      label: data.title,
+    };
+  }
 
   const dataTree: Link[] = [];
 
-  dataset.forEach((data) => {
+  for (const data of dataset) {
     if (data.menu_item_parent !== '0') {
       const children = hashTable[data.menu_item_parent].children;
       children?.push(hashTable[data.ID]);
     } else {
       dataTree.push(hashTable[data.ID]);
     }
-  });
+  }
 
   return dataTree;
 };
