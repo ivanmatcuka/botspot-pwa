@@ -20,6 +20,7 @@ export type WPComponentNames =
   | 'ui/download-area-content'
   | 'ui/products-topic'
   | 'ui/products-list'
+  | 'ui/share-button'
   | 'core/heading'
   | 'core/paragraph';
 

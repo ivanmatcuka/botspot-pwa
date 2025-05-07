@@ -88,6 +88,7 @@ const componentMap: Partial<ComponentMap> = {
   'ui/products-list': ProductsList,
   'ui/products-topic': ProductsTopic,
   'ui/secondary-block': botspot.SecondaryBlock,
+  'ui/share-button': botspot.ShareButton,
   'ui/skeleton-video': botspot.SkeletonVideo,
   'ui/tile': botspot.Tile,
   'ui/typography': botspot.Typography,
