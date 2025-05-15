@@ -2,7 +2,7 @@ import { Menu } from '@botspot/ui';
 import Link from 'next/link';
 import { FC } from 'react';
 
-import { NextButton } from '../NextButton';
+import { Button } from '../adapters/ui/Button';
 
 type MenuItem = {
   children?: MenuItem[];
@@ -29,14 +29,14 @@ export const NavbarMenu: FC<NavbarMenuProps> = ({
     const activeClass = isActive ? 'active' : '';
 
     return (
-      <NextButton
+      <Button
         className={`${activeClass} ${roundedClass}`}
         disabled={item.disabled}
         href={item.href ?? '/'}
         variant="menuItem"
       >
         {item.label}
-      </NextButton>
+      </Button>
     );
   }
 

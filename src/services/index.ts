@@ -20,13 +20,11 @@ export type WPComponentNames =
   | 'ui/download-area-content'
   | 'ui/products-topic'
   | 'ui/products-list'
-  | 'ui/share-button'
-  | 'core/heading'
-  | 'core/paragraph';
+  | 'ui/share-button';
 
 export type Block = {
   attrs: unknown;
-  blockName: WPComponentNames;
+  blockName: string;
   innerBlocks: Block[];
   innerContent: unknown[];
   innerHTML: string;

@@ -5,8 +5,8 @@ import './globals.scss';
 import type { Metadata } from 'next';
 
 import { Footer } from '@/components/Footer';
+import { GutenbergBlocks } from '@/components/GutenbergBlocks';
 import { Navbar } from '@/components/Navbar/Navbar';
-import { WPBlocks } from '@/components/WPBlocks';
 import { getAreas } from '@/services/getAreas';
 import { getComponentBySlug } from '@/services/getComponentBySlug';
 import { getMenuBySlug } from '@/services/getMenuBySlug';
@@ -23,7 +23,7 @@ import { ReactNode } from 'react';
 
 const poppins = Poppins({
   subsets: ['latin'],
-  weight: ['300', '400', '600'],
+  weight: ['300', '400', '500', '600'],
 });
 
 export const metadata: Metadata = {
@@ -80,7 +80,7 @@ export default async function RootLayout({
             <SnackbarProvider>
               <NextTopLoader />
               <Navbar
-                cta={blocks && <WPBlocks blocks={blocks} />}
+                cta={blocks && <GutenbergBlocks blocks={blocks} />}
                 navItems={navbarItems}
               />
               <Box className="flex-1 flex flex-col">{children}</Box>

@@ -2,7 +2,7 @@
  * This page is just a placeholder and is to be used
  * as preview page.
  */
-import { WPBlocks } from '@/components/WPBlocks';
+import { GutenbergBlocks } from '@/components/GutenbergBlocks';
 import { getPage } from '@/services/getPage';
 import { generatePageMetadata } from '@/utils/generatePageMetadata';
 import { Metadata } from 'next';
@@ -31,6 +31,8 @@ export default async function Page({
   const blocks = page.block_data;
 
   return (
-    <main className="w-full">{blocks && <WPBlocks blocks={blocks} />}</main>
+    <main className="w-full">
+      {blocks && <GutenbergBlocks blocks={blocks} />}
+    </main>
   );
 }

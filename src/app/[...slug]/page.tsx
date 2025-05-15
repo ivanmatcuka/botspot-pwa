@@ -1,4 +1,4 @@
-import { WPBlocks } from '@/components/WPBlocks';
+import { Template } from '@/components/Template';
 import { getPage } from '@/services/getPage';
 import { generatePageMetadata } from '@/utils/generatePageMetadata';
 import { Metadata } from 'next';
@@ -24,9 +24,5 @@ export default async function Page({
   const page = await getPage(slug);
   if (!page) return notFound();
 
-  const blocks = page.block_data;
-
-  return (
-    <main className="w-full">{blocks && <WPBlocks blocks={blocks} />}</main>
-  );
+  return <Template post={page} />;
 }

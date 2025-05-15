@@ -4,7 +4,7 @@
  */
 import { CustomPost, GalleryTile, SecondaryBlock } from '@botspot/ui';
 
-import { NextButton } from './NextButton';
+import { Button } from './adapters/ui/Button';
 
 const ACADEMY_URL = '3d-academy'; // Legacy
 const POST_CTA_DEFAULT = 'Read Full Story'; // Legacy
@@ -25,9 +25,9 @@ export default async function AttachedPost({
         headline={post.title.rendered}
         sublineElement={post.excerpt.rendered}
       >
-        <NextButton href={`/${ACADEMY_URL}/${post.slug}`} variant="primary">
+        <Button href={`/${ACADEMY_URL}/${post.slug}`} variant="primary">
           {postCta}
-        </NextButton>
+        </Button>
       </SecondaryBlock>
     </GalleryTile>
   );

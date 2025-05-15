@@ -3,17 +3,11 @@ import { getComponentBySlug } from '@/services/getComponentBySlug';
 import { getMenuBySlug } from '@/services/getMenuBySlug';
 import { normalizeURL } from '@/utils/normalizeURL';
 import { CustomPost } from '@botspot/ui';
-import {
-  Box,
-  Container,
-  Grid,
-  LegacyPostContainer,
-  Typography,
-} from '@botspot/ui';
+import { Box, Container, Grid, Typography } from '@botspot/ui';
 import Link from 'next/link';
 import { FC, PropsWithChildren } from 'react';
 
-import { WPBlocks } from './WPBlocks';
+import { GutenbergBlocks } from './GutenbergBlocks';
 
 type TextProps = {
   href?: string;
@@ -99,11 +93,9 @@ export const Footer: FC<FooterProps> = async ({ products }) => {
         <Container maxWidth="xl">
           <Grid md={10} mx="auto" py={8} xs={12} container>
             <Grid flexBasis={{ md: '40%', xs: '100%' }} item>
-              <LegacyPostContainer>
-                {footerContactsBlocks && (
-                  <WPBlocks blocks={footerContactsBlocks} />
-                )}
-              </LegacyPostContainer>
+              {footerContactsBlocks && (
+                <GutenbergBlocks blocks={footerContactsBlocks} />
+              )}
             </Grid>
             <Grid
               flexBasis={{ md: '20%', xs: '100%' }}
@@ -150,7 +142,7 @@ export const Footer: FC<FooterProps> = async ({ products }) => {
             xs={12}
             item
           >
-            {subfooterBlocks && <WPBlocks blocks={subfooterBlocks} />}
+            {subfooterBlocks && <GutenbergBlocks blocks={subfooterBlocks} />}
             <Box
               display="flex"
               flexDirection={{ md: 'row', xs: 'column' }}

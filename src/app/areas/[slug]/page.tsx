@@ -1,4 +1,4 @@
-import { WPBlocks } from '@/components/WPBlocks';
+import { GutenbergBlocks } from '@/components/GutenbergBlocks';
 import { getAreaBySlug } from '@/services/getAreaBySlug';
 import { getPost } from '@/services/getPost';
 import { generateSeo } from '@/utils/generateSeo';
@@ -44,7 +44,7 @@ export default async function Area({
 
   return (
     <main className="">
-      {blocks && <WPBlocks blocks={blocks} />}
+      {blocks && <GutenbergBlocks blocks={blocks} />}
 
       {post && (
         <Suspense>

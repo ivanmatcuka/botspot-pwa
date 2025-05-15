@@ -1,6 +1,6 @@
 import AttachedPost from '@/components/AttachedPost';
-import { NextButton } from '@/components/NextButton';
-import { WPBlocks } from '@/components/WPBlocks';
+import { Button } from '@/components/adapters/ui/Button';
+import { GutenbergBlocks } from '@/components/GutenbergBlocks';
 import { getPost } from '@/services/getPost';
 import { getProductBySlug } from '@/services/getProductBySlug';
 import { generateSeo } from '@/utils/generateSeo';
@@ -70,15 +70,15 @@ export default async function Product({
           mediaBlockOptions={{ assetUrl: banner }}
           sublineElement={product.excerpt.rendered}
         >
-          <NextButton
+          <Button
             href={`${downloadUrl}?default=${product.title.rendered}`}
             variant="primary"
           >
             {downloadCta}
-          </NextButton>
-          <NextButton href={demoUrl} target="_blank" variant="secondary">
+          </Button>
+          <Button href={demoUrl} target="_blank" variant="secondary">
             {demoCta}
-          </NextButton>
+          </Button>
         </Banner>
       )}
 
@@ -108,7 +108,7 @@ export default async function Product({
         <MainBlock headline={secondHeadline} subline={secondSubline} />
       </PageContainer>
 
-      {!!blocks && <WPBlocks blocks={blocks} />}
+      {!!blocks && <GutenbergBlocks blocks={blocks} />}
 
       {post && (
         <Suspense>
