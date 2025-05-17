@@ -1,30 +1,21 @@
 'use client';
 
-import { convertBorderToMUI } from '@/utils/convertBorderToMUI';
+import { Attrs } from '@/services';
+import { parseGutenbergBorders } from '@/utils/parseGutenbergBorders';
 import { parseGutenbergSpacing } from '@/utils/parseGutenbergSpacing';
-import * as botspot from '@botspot/ui';
-import { palette } from '@botspot/ui';
+import { Box, palette } from '@botspot/ui';
 import { FC, PropsWithChildren } from 'react';
 
-type GutenbergBoxProps = {
-  backgroundColor?: string;
-  className?: string;
-  layout?: any;
-  style?: any;
-  tagName?: any;
-  textColor?: string;
-};
-export const GutenbergBox: FC<PropsWithChildren<GutenbergBoxProps>> = ({
+export const GutenbergBox: FC<PropsWithChildren<Attrs>> = ({
   backgroundColor,
   children,
   className,
   layout,
   style,
-  tagName,
   textColor,
-  // ...rest
 }) => {
-  const { blockGap } = style?.spacing ?? {};
+  const { position, spacing } = style ?? {};
+  const { blockGap } = spacing ?? {};
   const { contentSize, flexWrap, justifyContent, orientation, type } =
     layout ?? {};
 
@@ -34,39 +25,38 @@ export const GutenbergBox: FC<PropsWithChildren<GutenbergBoxProps>> = ({
   const gap = blockGap?.split('|').pop();
 
   const isFlex = type === 'flex';
-  const spacing = parseGutenbergSpacing(style?.spacing);
-  const { type: positionType, ...inset } = style?.position ?? {};
+  const spacings = parseGutenbergSpacing(spacing);
+  const { type: positionType, ...inset } = position ?? {};
 
-  const borders = convertBorderToMUI(style.border);
-  const [bgColor, bgShade] = backgroundColor?.split('-') ?? '';
+  const borders = style?.border ? parseGutenbergBorders(style.border) : {};
+  const backgroundPaletteName = backgroundColor?.split('-') ?? '';
+
+  const bgColor = backgroundPaletteName[0] as keyof typeof palette;
+  const bgShade =
+    backgroundPaletteName[1] as keyof (typeof palette)[typeof bgColor];
+
+  const flexDirection = orientation === 'vertical' ? 'column' : 'row';
 
   return (
-    <botspot.Box
-      flexDirection={
-        isFlex
-          ? orientation && orientation === 'vertical'
-            ? 'column'
-            : 'row'
-          : 'column'
-      }
+    <Box
       bgcolor={backgroundColor ? palette?.[bgColor]?.[bgShade] : undefined}
       boxSizing="border-box"
       className={className}
       color={textColor === 'secondary' ? 'white' : undefined}
-      component={tagName}
       display="flex"
+      flexDirection={isFlex ? flexDirection : 'column'}
       flexWrap={isFlex ? flexWrap : undefined}
       gap={gap}
       justifyContent={justifyContent}
       margin={justifyContent === 'center' ? 'auto' : undefined}
       maxWidth={contentSize}
-      position={positionType}
+      position={positionType ?? 'static'}
       width={type === 'constrained' ? '100%' : undefined}
-      {...spacing}
+      {...spacings}
       {...borders}
       {...inset}
     >
       {children}
-    </botspot.Box>
+    </Box>
   );
 };

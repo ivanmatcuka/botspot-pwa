@@ -2,9 +2,9 @@ import {
   Block,
   // WPComponentNames
 } from '@/services';
-import { getTemplateBlockComponent } from '@/utils/getTemplateBlockComponent';
+import { getWordPressTemplateBlockFn } from '@/utils/getWordPressTemplateBlockFn';
 import * as botspot from '@botspot/ui';
-import { ComponentProps, FC } from 'react';
+import { FC } from 'react';
 import { Fragment } from 'react';
 
 import { Button } from './adapters/botspot/Button';
@@ -19,6 +19,7 @@ import { CoreColumn, CoreColumns } from './adapters/core/CoreColumns';
 import { CoreNavigation } from './adapters/core/CoreNavigation';
 import { CoreParagraph } from './adapters/core/CoreParagraph';
 import { GutenbergBox } from './GutenbergBox';
+import { getWordPressTemplatePartFn } from '../utils/getWordPressTemplatePartFn';
 
 type ComponentMap = Record<string, unknown>;
 
@@ -74,15 +75,9 @@ export function* generateBlockElements(
     }
 
     const Component = isTemplate
-      ? getTemplateBlockComponent(block.blockName, post)
-      : block.blockName === 'core/template-part'
-      ? () => (
-          <GutenbergBlocks
-            blocks={templateParts[block.attrs.slug]?.blocks ?? []}
-            post={post}
-            templateParts={templateParts}
-          />
-        )
+      ? getWordPressTemplateBlockFn(block.blockName, post)
+      : block.blockName === 'core/template-part' && block.attrs.slug
+      ? getWordPressTemplatePartFn(block.attrs.slug, templateParts, post)
       : (componentMap[block.blockName] as FC);
 
     if (!Component) {
@@ -97,7 +92,7 @@ export function* generateBlockElements(
 
     const hasChildren = block?.innerBlocks?.length > 0;
 
-    const { ref, ...props } = block.attrs as ComponentProps<typeof Component>;
+    const { ref, ...props } = block.attrs;
 
     if (ref) {
       console.warn('ref was removed from component');

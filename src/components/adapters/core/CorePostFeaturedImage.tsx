@@ -1,4 +1,4 @@
-import { Block } from '@/services';
+import { Attrs, Block } from '@/services';
 import { getFeaturedImageUrl } from '@/utils/getFeaturedImageUrl';
 import { CustomPost } from '@botspot/ui';
 import Image from 'next/image';
@@ -7,20 +7,15 @@ import { FC } from 'react';
 import { GutenbergBox } from '../../GutenbergBox';
 
 export type CorePostFeaturedImageProps = {
-  className: string;
-  height: string;
   post: CustomPost<Block>;
-  rel?: string;
-  style?: any;
-  width: string;
-};
+} & Attrs;
 export const CorePostFeaturedImage: FC<CorePostFeaturedImageProps> = ({
   className,
-  height,
+  height = '100',
   post,
   rel,
   style,
-  width,
+  width = '100',
 }) => {
   const featuredImage = getFeaturedImageUrl(post);
 
@@ -30,7 +25,7 @@ export const CorePostFeaturedImage: FC<CorePostFeaturedImageProps> = ({
         alt={featuredImage}
         className={className}
         height={parseInt(height)}
-        rel={rel}
+        rel={rel ?? ''}
         src={featuredImage}
         width={parseInt(width)}
       />

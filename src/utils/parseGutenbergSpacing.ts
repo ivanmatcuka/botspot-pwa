@@ -1,11 +1,8 @@
-export type Dimension = {
-  bottom: string;
-  left: string;
-  right: string;
-  top: string;
-};
-export type Spacing = { margin: Dimension; padding: Dimension };
-export const parseGutenbergSpacing = (spacing: Spacing) => {
+import { Attrs } from '@/services';
+
+export const parseGutenbergSpacing = (
+  spacing: NonNullable<Attrs['style']>['spacing'],
+) => {
   const { margin, padding } = spacing ?? {};
 
   return {

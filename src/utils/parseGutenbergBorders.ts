@@ -1,21 +1,9 @@
 'use client';
 
+import { Border } from '@/services';
 import { palette } from '@botspot/ui';
 
-type BorderSide = {
-  color?: string;
-  style?: string;
-  width: string;
-};
-
-type Border = {
-  bottom?: BorderSide;
-  left?: BorderSide;
-  right?: BorderSide;
-  top?: BorderSide;
-};
-
-export function convertBorderToMUI(border: Border) {
+export function parseGutenbergBorders(border: Border) {
   const directionMap = {
     bottom: 'borderBottom',
     left: 'borderLeft',
@@ -37,10 +25,15 @@ export function convertBorderToMUI(border: Border) {
 
       if (color) {
         const resolvedColor = color.replace('var:preset|color|', '');
-        const [bColor, bShade] = resolvedColor?.split('-') ?? '';
+
+        const borderPaletteName = resolvedColor?.split('-') ?? '';
+
+        const borderColor = borderPaletteName[0] as keyof typeof palette;
+        const borderShade =
+          borderPaletteName[1] as keyof (typeof palette)[typeof borderColor];
 
         borderValue += ` ${
-          resolvedColor ? palette?.[bColor]?.[bShade] : undefined
+          resolvedColor ? palette?.[borderColor]?.[borderShade] : undefined
         }`;
       }
 

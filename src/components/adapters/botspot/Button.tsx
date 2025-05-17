@@ -5,4 +5,7 @@ import { ComponentProps, FC } from 'react';
 export const Button: FC<ComponentProps<typeof BotspotButton>> = ({
   component,
   ...rest
-}) => <BotspotButton {...rest} component={rest.href ? Link : component} />;
+}) => {
+  // console.log(rest);
+  return <BotspotButton {...rest} component={rest.href ? Link : component} />;
+};

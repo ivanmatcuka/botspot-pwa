@@ -1,4 +1,5 @@
 import { Block } from '@/services';
+import { BlockSupports } from '@wordpress/blocks';
 import { FC } from 'react';
 
 import { GutenbergBlocks } from '../../GutenbergBlocks';
@@ -8,7 +9,7 @@ export type CorePostContentProps = {
   blocks: Block[];
   className?: string;
   style?: any;
-};
+} & BlockSupports;
 export const CorePostContent: FC<CorePostContentProps> = ({
   blocks,
   className,
