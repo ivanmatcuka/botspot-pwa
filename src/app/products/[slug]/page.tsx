@@ -67,7 +67,7 @@ export default async function Product({
       {banner && (
         <Banner
           headline={product.title.rendered}
-          mediaBlockOptions={{ assetUrl: banner }}
+          mediaBlockOptions={{ assetUrl: banner, banner: true }}
           sublineElement={product.excerpt.rendered}
         >
           <NextButton
