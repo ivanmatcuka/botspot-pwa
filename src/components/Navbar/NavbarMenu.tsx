@@ -25,7 +25,7 @@ export const NavbarMenu: FC<NavbarMenuProps> = ({
   if (!item.children?.length) {
     const isActive = currentPath === item.href;
     const roundedClass = hasParent ? '!rounded-none' : '';
-    const activeClass = isActive ? 'active' : '';
+    const activeClass = isActive ? 'active h-full' : '';
 
     return (
       <Button
@@ -42,7 +42,7 @@ export const NavbarMenu: FC<NavbarMenuProps> = ({
   return (
     <Link href={item.href || '#'}>
       <Menu
-        className={currentPath === item.href ? 'active' : ''}
+        className={currentPath === item.href ? 'active h-full' : ''}
         label={item.label}
       >
         {item.children.map((child, index) => (
