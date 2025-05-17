@@ -1,5 +1,5 @@
+import { Button } from '@/components/adapters/botspot/Button';
 import AttachedPost from '@/components/AttachedPost';
-import { Button } from '@/components/adapters/ui/Button';
 import { GutenbergBlocks } from '@/components/GutenbergBlocks';
 import { getPost } from '@/services/getPost';
 import { getProductBySlug } from '@/services/getProductBySlug';

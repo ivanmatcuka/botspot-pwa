@@ -4,15 +4,6 @@ import './globals.scss';
 
 import type { Metadata } from 'next';
 
-import { Footer } from '@/components/Footer';
-import { GutenbergBlocks } from '@/components/GutenbergBlocks';
-import { Navbar } from '@/components/Navbar/Navbar';
-import { getAreas } from '@/services/getAreas';
-import { getComponentBySlug } from '@/services/getComponentBySlug';
-import { getMenuBySlug } from '@/services/getMenuBySlug';
-import { getProducts } from '@/services/getProducts';
-import { attachPage } from '@/utils/attachPage';
-import { createDataTree } from '@/utils/createDataTree';
 import { Box, SnackbarProvider, ThemeRegistry } from '@botspot/ui';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { GoogleTagManager } from '@next/third-parties/google';
@@ -48,21 +39,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
-  const [{ data: products }, { data: areas }, menus, navbar] =
-    await Promise.all([
-      getProducts(),
-      getAreas(),
-      getMenuBySlug('header'),
-      getComponentBySlug('navbar-item'),
-    ]);
-
-  const navbarItems = [...createDataTree(menus)];
-
-  for (const area of areas) attachPage(area, navbarItems, 'areas');
-  for (const product of products) attachPage(product, navbarItems, 'products');
-
-  const blocks = navbar?.block_data;
-
   return (
     <html lang="en">
       {process.env.nodeEnv === 'production' && (
@@ -79,12 +55,7 @@ export default async function RootLayout({
           <ThemeRegistry>
             <SnackbarProvider>
               <NextTopLoader />
-              <Navbar
-                cta={blocks && <GutenbergBlocks blocks={blocks} />}
-                navItems={navbarItems}
-              />
               <Box className="flex-1 flex flex-col">{children}</Box>
-              <Footer products={products} />
             </SnackbarProvider>
           </ThemeRegistry>
         </AppRouterCacheProvider>

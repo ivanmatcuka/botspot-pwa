@@ -4,7 +4,7 @@ import { getTemplateParts } from '@/services/getTemplateParts';
 import { CustomPost, Typography } from '@botspot/ui';
 import { FC, PropsWithChildren } from 'react';
 
-import { Button } from './adapters/ui/Button';
+import { Button } from './adapters/botspot/Button';
 import { FullScreenBox } from './FullScreenBox';
 import { GutenbergBlocks } from './GutenbergBlocks';
 

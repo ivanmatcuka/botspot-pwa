@@ -20,7 +20,7 @@ const wpToMuiVariant: Record<
   paragraph: 'body1',
 };
 
-type TypographyProps = {
+type CoreParagraphProps = {
   backgroundColor: string;
   content: string;
   fontSize?: string;
@@ -28,7 +28,7 @@ type TypographyProps = {
   style: any;
   textColor?: string;
 };
-export const Typography: FC<TypographyProps> = ({
+export const CoreParagraph: FC<CoreParagraphProps> = ({
   backgroundColor,
   content,
   fontSize = 'body1',

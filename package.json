@@ -19,7 +19,7 @@
     "@next/third-parties": "15.1.6",
     "@smakss/react-scroll-direction": "^4.2.0",
     "cookies-next": "^4.3.0",
-    "html-react-parser": "^5.1.18",
+    "html-react-parser": "^5.2.5",
     "html-to-react": "^1.7.0",
     "i18next": "^24.0.5",
     "i18next-resources-to-backend": "^1.2.1",

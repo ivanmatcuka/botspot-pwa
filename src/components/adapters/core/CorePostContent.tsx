@@ -4,12 +4,17 @@ import { FC } from 'react';
 import { GutenbergBlocks } from '../../GutenbergBlocks';
 import { GutenbergBox } from '../../GutenbergBox';
 
-export type PostContentProps = {
+export type CorePostContentProps = {
   blocks: Block[];
+  className?: string;
   style?: any;
 };
-export const PostContent: FC<PostContentProps> = ({ blocks, style }) => (
-  <GutenbergBox style={style}>
+export const CorePostContent: FC<CorePostContentProps> = ({
+  blocks,
+  className,
+  style,
+}) => (
+  <GutenbergBox className={className} style={style}>
     <GutenbergBlocks blocks={blocks} />
   </GutenbergBox>
 );

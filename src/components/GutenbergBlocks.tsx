@@ -2,28 +2,22 @@ import {
   Block,
   // WPComponentNames
 } from '@/services';
-import { getFeaturedImageUrl } from '@/utils/getFeaturedImageUrl';
-import { parseGutenbergSpacing, Spacing } from '@/utils/parseGutenbergSpacing';
+import { getTemplateBlockComponent } from '@/utils/getTemplateBlockComponent';
 import * as botspot from '@botspot/ui';
 import { ComponentProps, FC } from 'react';
 import { Fragment } from 'react';
 
+import { Button } from './adapters/botspot/Button';
+import { DownloadAreaContent } from './adapters/botspot/DownloadAreaContent';
+import { Form } from './adapters/botspot/Form';
+import { Jobs } from './adapters/botspot/Jobs';
+import { People } from './adapters/botspot/People';
+import { Posts } from './adapters/botspot/Posts';
+import { ProductsList } from './adapters/botspot/ProductsList';
+import { ProductsTopic } from './adapters/botspot/ProductsTopic';
 import { CoreColumn, CoreColumns } from './adapters/core/CoreColumns';
 import { CoreNavigation } from './adapters/core/CoreNavigation';
-import { PostContent, PostContentProps } from './adapters/core/PostContent';
-import {
-  PostFeaturedImage,
-  PostFeaturedImageProps,
-} from './adapters/core/PostFeaturedImage';
-import { Typography } from './adapters/core/Typography';
-import { Button } from './adapters/ui/Button';
-import { DownloadAreaContent } from './adapters/ui/DownloadAreaContent';
-import { Form } from './adapters/ui/Form';
-import { Jobs } from './adapters/ui/Jobs';
-import { People } from './adapters/ui/People';
-import { Posts } from './adapters/ui/Posts';
-import { ProductsList } from './adapters/ui/ProductsList';
-import { ProductsTopic } from './adapters/ui/ProductsTopic';
+import { CoreParagraph } from './adapters/core/CoreParagraph';
 import { GutenbergBox } from './GutenbergBox';
 
 type ComponentMap = Record<string, unknown>;
@@ -32,9 +26,9 @@ const componentMap: Partial<ComponentMap> = {
   'core/column': CoreColumn,
   'core/columns': CoreColumns,
   'core/group': GutenbergBox,
-  'core/heading': Typography,
-  // 'core/navigation': CoreNavigation,
-  'core/paragraph': Typography,
+  'core/heading': CoreParagraph,
+  'core/paragraph': CoreParagraph,
+  'core/stack': GutenbergBox,
 
   'ui/banner': botspot.Banner,
   'ui/button': Button,
@@ -65,56 +59,31 @@ export const TEMPLATE_BLOCKS = [
   'core/post-title',
   'core/post-featured-image',
 ];
-export function* renderBlocks(
+export function* generateBlockElements(
   blocks: Block[],
   templateParts: Record<string, { blocks: Block[]; data: unknown }>,
   post?: botspot.CustomPost<Block>,
 ) {
-  const featuredImage = getFeaturedImageUrl(post);
-
-  const templateBlockMap: Record<(typeof TEMPLATE_BLOCKS)[number], unknown> = {
-    'core/post-title': ({ style }: { style: { spacing: Spacing } }) => (
-      <botspot.Typography
-        variant="h1"
-        {...parseGutenbergSpacing(style.spacing)}
-      >
-        {post?.title.rendered}
-      </botspot.Typography>
-    ),
-    'core/post-content': post?.block_data
-      ? (props: Omit<PostContentProps, 'blocks'>) => (
-          <PostContent blocks={post.block_data ?? []} {...props} />
-        )
-      : null,
-    'core/post-featured-image':
-      featuredImage && post
-        ? (props: Omit<PostFeaturedImageProps, 'post'>) => (
-            <PostFeaturedImage post={post} {...props} />
-          )
-        : null,
-  };
-
   for (let index = 0; index < blocks.length; index++) {
     const block = blocks[index];
     const isTemplate = TEMPLATE_BLOCKS.includes(block.blockName);
 
-    const Component = (
-      isTemplate
-        ? templateBlockMap[block.blockName]
-        : block.blockName === 'core/template-part'
-        ? () => (
-            <GutenbergBlocks
-              blocks={templateParts[block.attrs.slug].blocks}
-              post={post}
-              templateParts={templateParts}
-            />
-          )
-        : componentMap[block.blockName]
-    ) as FC;
-
     if (block.blockName === 'core/navigation') {
-      console.log(block);
+      yield <CoreNavigation block={block} key={index} />;
+      continue;
     }
+
+    const Component = isTemplate
+      ? getTemplateBlockComponent(block.blockName, post)
+      : block.blockName === 'core/template-part'
+      ? () => (
+          <GutenbergBlocks
+            blocks={templateParts[block.attrs.slug]?.blocks ?? []}
+            post={post}
+            templateParts={templateParts}
+          />
+        )
+      : (componentMap[block.blockName] as FC);
 
     if (!Component) {
       yield (
@@ -127,7 +96,12 @@ export function* renderBlocks(
     }
 
     const hasChildren = block?.innerBlocks?.length > 0;
-    const props = block.attrs as ComponentProps<typeof Component>;
+
+    const { ref, ...props } = block.attrs as ComponentProps<typeof Component>;
+
+    if (ref) {
+      console.warn('ref was removed from component');
+    }
 
     if (hasChildren) {
       yield (
@@ -135,7 +109,7 @@ export function* renderBlocks(
         // @ts-ignore
         <Component key={index} {...props}>
           <Fragment key={`child-${index}`}>
-            {[...renderBlocks(block.innerBlocks, templateParts, post)]}
+            {[...generateBlockElements(block.innerBlocks, templateParts, post)]}
           </Fragment>
         </Component>
       );
@@ -159,5 +133,5 @@ export const GutenbergBlocks: FC<WPBlocksProps> = ({
   post,
   templateParts = {},
 }) => {
-  return <>{[...renderBlocks(blocks, templateParts, post)]}</>;
+  return <>{[...generateBlockElements(blocks, templateParts, post)]}</>;
 };

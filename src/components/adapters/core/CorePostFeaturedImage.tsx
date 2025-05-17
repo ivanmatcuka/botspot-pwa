@@ -6,7 +6,7 @@ import { FC } from 'react';
 
 import { GutenbergBox } from '../../GutenbergBox';
 
-export type PostFeaturedImageProps = {
+export type CorePostFeaturedImageProps = {
   className: string;
   height: string;
   post: CustomPost<Block>;
@@ -14,7 +14,7 @@ export type PostFeaturedImageProps = {
   style?: any;
   width: string;
 };
-export const PostFeaturedImage: FC<PostFeaturedImageProps> = ({
+export const CorePostFeaturedImage: FC<CorePostFeaturedImageProps> = ({
   className,
   height,
   post,

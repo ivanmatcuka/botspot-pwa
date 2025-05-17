@@ -4,7 +4,7 @@
  */
 import { CustomPost, GalleryTile, SecondaryBlock } from '@botspot/ui';
 
-import { Button } from './adapters/ui/Button';
+import { Button } from './adapters/botspot/Button';
 
 const ACADEMY_URL = '3d-academy'; // Legacy
 const POST_CTA_DEFAULT = 'Read Full Story'; // Legacy

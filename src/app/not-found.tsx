@@ -1,4 +1,4 @@
-import { Button } from '@/components/adapters/ui/Button';
+import { Button } from '@/components/adapters/botspot/Button';
 import { Box, Typography } from '@botspot/ui';
 
 export default function NotFound() {

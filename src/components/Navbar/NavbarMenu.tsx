@@ -2,7 +2,7 @@ import { Menu } from '@botspot/ui';
 import Link from 'next/link';
 import { FC } from 'react';
 
-import { Button } from '../adapters/ui/Button';
+import { Button } from '../adapters/botspot/Button';
 
 type MenuItem = {
   children?: MenuItem[];
@@ -23,8 +23,7 @@ export const NavbarMenu: FC<NavbarMenuProps> = ({
   item,
 }) => {
   if (!item.children?.length) {
-    // @TODO: secure
-    const isActive = currentPath + '/' === item.href;
+    const isActive = currentPath === item.href;
     const roundedClass = hasParent ? '!rounded-none' : '';
     const activeClass = isActive ? 'active' : '';
 

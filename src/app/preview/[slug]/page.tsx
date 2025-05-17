@@ -2,7 +2,7 @@
  * This page is just a placeholder and is to be used
  * as preview page.
  */
-import { GutenbergBlocks } from '@/components/GutenbergBlocks';
+import { Template } from '@/components/Template';
 import { getPage } from '@/services/getPage';
 import { generatePageMetadata } from '@/utils/generatePageMetadata';
 import { Metadata } from 'next';
@@ -28,11 +28,5 @@ export default async function Page({
   const page = await getPage(slug);
   if (!page) return notFound();
 
-  const blocks = page.block_data;
-
-  return (
-    <main className="w-full">
-      {blocks && <GutenbergBlocks blocks={blocks} />}
-    </main>
-  );
+  return <Template post={page} />;
 }
