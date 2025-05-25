@@ -1,8 +1,8 @@
 export const revalidate = 0;
 
-import { Page } from '@/components/wordpress/Page';
 import { getPage } from '@/services/getPage';
 import { generatePageMetadata } from '@/utils/generatePageMetadata';
+import { Page } from '@/wordpress/Page';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 

@@ -1,7 +1,6 @@
+import { GutenbergBlocks } from '@/components/GutenbergBlocks';
 import { getTemplateParts } from '@/services/getTemplateParts';
 import { FC, PropsWithChildren } from 'react';
-
-import { GutenbergBlocks } from '../GutenbergBlocks';
 
 export const TEMPLATE_BLOCKS = [
   'core/post-content',

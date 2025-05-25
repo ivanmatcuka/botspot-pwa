@@ -1,14 +1,13 @@
+import { AttachedPost } from '@/components/AttachedPost';
 import { GutenbergBlocks } from '@/components/GutenbergBlocks';
-import { TemplatePart } from '@/components/wordpress/TemplatePart';
 import { getAreaBySlug } from '@/services/getAreaBySlug';
 import { getPost } from '@/services/getPost';
 import { generateSeo } from '@/utils/generateSeo';
 import { getFeaturedImageUrl } from '@/utils/getFeaturedImageUrl';
+import { TemplatePart } from '@/wordpress/TemplatePart';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
-
-import AttachedPost from '../../../components/AttachedPost';
 
 const DEFAULT_META = {
   title: 'botspot – Area Page',

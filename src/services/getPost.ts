@@ -7,5 +7,6 @@ export const getPost = async (id: number) => {
   const data = await fetchEntity<CustomPost<Block>[]>(
     `${baseUrl}/posts?include=${id}&_embed`,
   );
+
   return data?.[0] ?? null;
 };

@@ -1,6 +1,6 @@
-import { Page } from '@/components/wordpress/Page';
 import { getPostBySlug } from '@/services/getPostBySlug';
 import { generateSeo } from '@/utils/generateSeo';
+import { Page } from '@/wordpress/Page';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 

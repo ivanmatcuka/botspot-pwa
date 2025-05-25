@@ -1,11 +1,11 @@
 import { Button } from '@/components/adapters/botspot/Button';
-import AttachedPost from '@/components/AttachedPost';
+import { AttachedPost } from '@/components/AttachedPost';
 import { GutenbergBlocks } from '@/components/GutenbergBlocks';
-import { TemplatePart } from '@/components/wordpress/TemplatePart';
 import { getPost } from '@/services/getPost';
 import { getProductBySlug } from '@/services/getProductBySlug';
 import { generateSeo } from '@/utils/generateSeo';
 import { getFeaturedImageUrl } from '@/utils/getFeaturedImageUrl';
+import { TemplatePart } from '@/wordpress/TemplatePart';
 import { CustomFields } from '@botspot/ui';
 import { Banner, MainBlock, MediaBlock, PageContainer } from '@botspot/ui';
 import { Metadata } from 'next';

@@ -7,28 +7,26 @@ import { Attrs, Block } from '@/services';
 import { CustomPost, Typography } from '@botspot/ui';
 import { FC } from 'react';
 
-import { getFeaturedImageUrl } from './getFeaturedImageUrl';
 import { parseGutenbergSpacing } from './parseGutenbergSpacing';
 
 export function getWordPressTemplateBlockFn(
   blockName: string,
-  post?: CustomPost<Block>,
+  post: CustomPost<Block>,
 ): FC | null {
-  const featuredImage = getFeaturedImageUrl(post);
+  if (!post?.block_data) return null;
 
   const map: Record<string, FC | null> = {
     'core/post-content': (props: Omit<CorePostContentProps, 'blocks'>) => (
       <CorePostContent blocks={post?.block_data ?? []} {...props} />
+    ),
+    'core/post-featured-image': (props: Attrs) => (
+      <CorePostFeaturedImage post={post} {...props} />
     ),
     'core/post-title': ({ fontSize = 'h1', style }: Attrs) => (
       <Typography variant={fontSize} {...parseGutenbergSpacing(style?.spacing)}>
         {post?.title.rendered}
       </Typography>
     ),
-    'core/post-featured-image':
-      featuredImage && post
-        ? (props: Attrs) => <CorePostFeaturedImage post={post} {...props} />
-        : null,
   };
 
   return map[blockName] || null;

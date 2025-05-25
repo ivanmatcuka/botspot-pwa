@@ -2,9 +2,9 @@
  * This page is just a placeholder and is to be used
  * as preview page.
  */
-import { Page as WordPressPage } from '@/components/wordpress/Page';
 import { getPage } from '@/services/getPage';
 import { generatePageMetadata } from '@/utils/generatePageMetadata';
+import { Page } from '@/wordpress/Page';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
@@ -17,7 +17,7 @@ export async function generateMetadata({
   return generatePageMetadata(slug);
 }
 
-export default async function Page({
+export default async function Preview({
   params,
 }: {
   params: Promise<{ slug: string }>;
@@ -28,5 +28,5 @@ export default async function Page({
   const page = await getPage(slug);
   if (!page) return notFound();
 
-  return <WordPressPage post={page} />;
+  return <Page post={page} />;
 }

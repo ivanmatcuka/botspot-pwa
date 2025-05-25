@@ -3,6 +3,7 @@
  * to an Area or a Product via WordPress CMS.
  */
 import { CustomPost, GalleryTile, SecondaryBlock } from '@botspot/ui';
+import { FC } from 'react';
 
 import { Button } from './adapters/botspot/Button';
 
@@ -14,11 +15,11 @@ type AttachedPostProps = {
   postCta?: string;
   relatedImage: string;
 };
-export default async function AttachedPost({
+export const AttachedPost: FC<AttachedPostProps> = async ({
   post,
   postCta = POST_CTA_DEFAULT,
   relatedImage,
-}: AttachedPostProps) {
+}) => {
   return (
     <GalleryTile imgUrl={relatedImage}>
       <SecondaryBlock
@@ -31,4 +32,4 @@ export default async function AttachedPost({
       </SecondaryBlock>
     </GalleryTile>
   );
-}
+};

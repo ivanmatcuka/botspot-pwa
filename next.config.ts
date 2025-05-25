@@ -31,8 +31,8 @@ const adaptRedirectsForNextJs = (jsonData: JsonData) =>
 const nextConfig: NextConfig = {
   output: 'standalone',
   async redirects() {
-    const jsonData = await getRedirects();
-    const nextJsRedirects = adaptRedirectsForNextJs(jsonData.data);
+    const redirects = await getRedirects();
+    const nextJsRedirects = adaptRedirectsForNextJs(redirects);
 
     return nextJsRedirects;
   },

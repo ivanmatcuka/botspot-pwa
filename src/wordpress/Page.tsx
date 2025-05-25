@@ -1,10 +1,9 @@
+import { GutenbergBlocks } from '@/components/GutenbergBlocks';
 import { Block } from '@/services';
 import { getTemplateBlocksBySlug } from '@/services/getTemplateBlocksBySlug';
 import { getWordPressTemplateBlockFn } from '@/utils/getWordPressTemplateBlockFn';
 import { CustomPost } from '@botspot/ui';
 import { FC, PropsWithChildren } from 'react';
-
-import { GutenbergBlocks } from '../GutenbergBlocks';
 
 export const TEMPLATE_BLOCKS = [
   'core/post-content',
@@ -40,7 +39,7 @@ export const Page: FC<PropsWithChildren<PageProps>> = async ({
   return (
     <GutenbergBlocks
       blocks={template.blocks ?? []}
-      componentMap={templateBlocksMap}
+      dynamicComponentMap={templateBlocksMap}
     />
   );
 };

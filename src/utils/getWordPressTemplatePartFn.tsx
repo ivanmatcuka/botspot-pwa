@@ -1,4 +1,4 @@
-import { TemplatePart } from '@/components/wordpress/TemplatePart';
+import { TemplatePart } from '@/wordpress/TemplatePart';
 
 export const getWordPressTemplatePartFn = (slug: string) => {
   return function BlocksFunction() {

@@ -1,13 +1,10 @@
-import {
-  Block,
-  // WPComponentNames
-} from '@/services';
+import { Block } from '@/services';
 import { getWordPressTemplatePartFn } from '@/utils/getWordPressTemplatePartFn';
+import { COMPONENT_MAP, ComponentMap } from '@/wordpress/component-map';
 import { FC } from 'react';
 import { Fragment } from 'react';
 
 import { CoreNavigation } from './adapters/core/CoreNavigation';
-import { COMPONENT_MAP, ComponentMap } from './wordpress/component-map';
 
 export function* generateBlockElements(
   blocks: Block[],
@@ -67,20 +64,16 @@ export function* generateBlockElements(
 
 type WPBlocksProps = {
   blocks: Block[];
-  componentMap?: ComponentMap;
+  dynamicComponentMap?: ComponentMap;
 };
 export const GutenbergBlocks: FC<WPBlocksProps> = async ({
   blocks,
-  componentMap = {},
+  dynamicComponentMap = {},
 }) => {
-  return (
-    <>
-      {[
-        ...generateBlockElements(blocks, {
-          ...componentMap,
-          ...COMPONENT_MAP,
-        }),
-      ]}
-    </>
-  );
+  const componentMap = {
+    ...dynamicComponentMap,
+    ...COMPONENT_MAP,
+  };
+
+  return <>{[...generateBlockElements(blocks, componentMap)]}</>;
 };
