@@ -88,8 +88,9 @@ export const CoreNavigation: FC<CoreNavigationProps> = memo(
       return extractLinks(navElement);
     }, [navElement]);
 
-    if (!isValidElement<PropsWithChildren<HTMLElement>>(navElement))
+    if (!isValidElement<PropsWithChildren<HTMLElement>>(navElement)) {
       return null;
+    }
 
     const classList = navElement?.props?.className.split(' ') ?? [];
     const isHeader = classList.includes('wp-header-navigation');

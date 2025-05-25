@@ -1,5 +1,3 @@
-'use client';
-
 import { palette } from '@botspot/ui';
 
 type HueKey = keyof typeof palette;
