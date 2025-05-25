@@ -1,4 +1,4 @@
-import { Template } from '@/components/Template';
+import { Page } from '@/components/wordpress/Page';
 import { getPostBySlug } from '@/services/getPostBySlug';
 import { generateSeo } from '@/utils/generateSeo';
 import { Metadata } from 'next';
@@ -32,5 +32,5 @@ export default async function Post({
 
   if (!post) return notFound();
 
-  return <Template post={post} />;
+  return <Page post={post} />;
 }

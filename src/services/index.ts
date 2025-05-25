@@ -66,19 +66,21 @@ export type Border = {
   top?: BorderSide;
 };
 
+export type Color = {
+  background?: string;
+  gradient?: string;
+  text?: string;
+};
+
 export type Attrs = {
   // Allow for arbitrary additional props from custom blocks
   [key: string]: unknown;
 
-  slug?: string;
-  tagName?: string;
-  rel?: string;
-
   // Common implicit attributes from `supports`
   align?: 'left' | 'right' | 'center' | 'wide' | 'full' | string;
-
   anchor?: string;
   backgroundColor?: string;
+
   caption?: string;
 
   // Core WordPress attributes (shared)
@@ -88,14 +90,18 @@ export type Attrs = {
 
   fontSize?: keyof Omit<typeof typography, 'fontFamily'>;
   gradient?: string;
-
   height?: string;
+
   id?: string | number;
-
   lineHeight?: string;
-  margin?: string | Record<string, string>;
 
+  margin?: string | Record<string, string>;
   padding?: string | Record<string, string>;
+
+  rel?: string;
+  slug?: string;
+
+  tagName?: string;
   textColor?: string;
   url?: string;
 
@@ -110,34 +116,33 @@ export type Attrs = {
 
   style?: {
     border?: Border;
-    color?: {
-      background?: string;
-      gradient?: string;
-      text?: string;
-    };
+    color?: Color;
     dimensions?: {
       minHeight?: string;
     };
+    elements?: {
+      [key: string]: { color?: Color };
+    };
     position?: {
-      type?: 'static' | 'sticky' | 'relative' | 'fixed' | 'relative';
       bottom?: string;
       left?: string;
       right?: string;
       top?: string;
+      type?: 'static' | 'sticky' | 'relative' | 'fixed' | 'relative';
     };
     spacing?: {
       blockGap?: string;
       margin?: {
-        top?: string;
-        right?: string;
         bottom?: string;
         left?: string;
+        right?: string;
+        top?: string;
       };
       padding?: {
-        top?: string;
-        right?: string;
         bottom?: string;
         left?: string;
+        right?: string;
+        top?: string;
       };
     };
     typography?: {

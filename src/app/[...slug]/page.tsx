@@ -1,4 +1,4 @@
-import { Template } from '@/components/Template';
+import { Page as WordPressPage } from '@/components/wordpress/Page';
 import { getPage } from '@/services/getPage';
 import { generatePageMetadata } from '@/utils/generatePageMetadata';
 import { Metadata } from 'next';
@@ -24,5 +24,5 @@ export default async function Page({
   const page = await getPage(slug);
   if (!page) return notFound();
 
-  return <Template post={page} />;
+  return <WordPressPage post={page} />;
 }

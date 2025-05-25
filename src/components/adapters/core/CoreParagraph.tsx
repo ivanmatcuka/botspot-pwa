@@ -1,4 +1,8 @@
+'use client';
+
+import { Attrs } from '@/services';
 import { parseGutenbergSpacing } from '@/utils/parseGutenbergSpacing';
+import { getPaletteColor } from '@/utils/parsePalette';
 import * as botspot from '@botspot/ui';
 import { ComponentProps, FC } from 'react';
 
@@ -19,16 +23,7 @@ const wpToMuiVariant: Record<
   medium: 'body1',
   paragraph: 'body1',
 };
-
-type CoreParagraphProps = {
-  backgroundColor: string;
-  content: string;
-  fontSize?: string;
-  level?: number;
-  style: any;
-  textColor?: string;
-};
-export const CoreParagraph: FC<CoreParagraphProps> = ({
+export const CoreParagraph: FC<Attrs> = ({
   backgroundColor,
   content,
   fontSize = 'body1',
@@ -37,13 +32,17 @@ export const CoreParagraph: FC<CoreParagraphProps> = ({
   textColor,
 }) => {
   const variant = wpToMuiVariant[level ? `h${level}` : fontSize];
-  const spacing = parseGutenbergSpacing(style.spacing);
+  const spacing = parseGutenbergSpacing(style?.spacing);
+
+  const linkColorRaw = style?.elements?.link?.color?.text?.split('|').pop();
+  const linkColor = linkColorRaw ? getPaletteColor(linkColorRaw) : undefined;
 
   return (
     <botspot.Typography
-      bgcolor={backgroundColor}
+      bgcolor={getPaletteColor(backgroundColor)}
       color={textColor}
-      dangerouslySetInnerHTML={{ __html: content }}
+      dangerouslySetInnerHTML={{ __html: content ?? '' }}
+      sx={{ a: { color: linkColor ? `${linkColor} !important` : undefined } }}
       variant={variant}
       {...spacing}
     />

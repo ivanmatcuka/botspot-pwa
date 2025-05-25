@@ -1,6 +1,7 @@
 import { Button } from '@/components/adapters/botspot/Button';
 import AttachedPost from '@/components/AttachedPost';
 import { GutenbergBlocks } from '@/components/GutenbergBlocks';
+import { TemplatePart } from '@/components/wordpress/TemplatePart';
 import { getPost } from '@/services/getPost';
 import { getProductBySlug } from '@/services/getProductBySlug';
 import { generateSeo } from '@/utils/generateSeo';
@@ -64,6 +65,7 @@ export default async function Product({
 
   return (
     <main className="">
+      <TemplatePart slug="header" />
       {banner && (
         <Banner
           headline={product.title.rendered}
@@ -119,6 +121,7 @@ export default async function Product({
           />
         </Suspense>
       )}
+      <TemplatePart slug="footer" />
     </main>
   );
 }

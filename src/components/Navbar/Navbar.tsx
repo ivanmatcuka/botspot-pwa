@@ -11,7 +11,7 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
 import { usePathname } from 'next/navigation';
-import { FC, useState } from 'react';
+import { FC, memo, useState } from 'react';
 
 import { NavbarDrawer } from './NavbarDrawer';
 import { NavbarMenu } from './NavbarMenu';
@@ -27,7 +27,7 @@ type MenuItem = {
 type NavbarProps = {
   navItems: MenuItem[];
 };
-export const Navbar: FC<NavbarProps> = ({ navItems }) => {
+export const Navbar: FC<NavbarProps> = memo(function Navbar({ navItems }) {
   const currentPath = usePathname();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -73,4 +73,4 @@ export const Navbar: FC<NavbarProps> = ({ navItems }) => {
       </Drawer>
     </Box>
   );
-};
+});

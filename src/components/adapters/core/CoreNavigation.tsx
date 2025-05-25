@@ -3,10 +3,20 @@
 import { GutenbergBox } from '@/components/GutenbergBox';
 import { Navbar } from '@/components/Navbar/Navbar';
 import { Block } from '@/services';
-import { palette, Typography } from '@botspot/ui';
+import { getPaletteColor } from '@/utils/parsePalette';
+import { Typography } from '@botspot/ui';
 import parse from 'html-react-parser';
 import Link from 'next/link';
-import { Children, FC, isValidElement, ReactElement, ReactNode } from 'react';
+import {
+  Children,
+  FC,
+  isValidElement,
+  memo,
+  PropsWithChildren,
+  ReactElement,
+  ReactNode,
+  useMemo,
+} from 'react';
 
 type MenuItem = {
   children?: MenuItem[];
@@ -25,7 +35,7 @@ function getChildByClass(className: string) {
 }
 
 const DEFAULT_LINK = { href: '#', label: 'Unknown link' };
-function recursive(child: ReactNode): MenuItem {
+function reactElementToMenuItem(child: ReactNode): MenuItem {
   if (!isValidElement(child)) return DEFAULT_LINK;
 
   const childrenElements = Children.toArray(child.props.children);
@@ -46,58 +56,62 @@ function recursive(child: ReactNode): MenuItem {
     label: isValidElement(label) ? label.props.children : label,
   };
 
+  // Base condition
   if (!isValidElement(submenu)) return link;
 
-  const children = Children.toArray(submenu.props.children).map(recursive);
+  const children = Children.toArray(submenu.props.children).map(
+    reactElementToMenuItem,
+  );
 
   return { children, ...link };
 }
 
-function extractLinks(node: ReactElement): MenuItem[] {
-  const links: MenuItem[] = Children.toArray(node.props.children).map(
-    recursive,
-  );
-
-  return links;
+function extractLinks({ props: { children } }: ReactElement): MenuItem[] {
+  return Children.toArray(children).map(reactElementToMenuItem);
 }
 
-type CoreNavigation = {
+type CoreNavigationProps = {
   block: Block;
 };
+export const CoreNavigation: FC<CoreNavigationProps> = memo(
+  function CoreNavigation({ block }) {
+    const parsed = useMemo(() => parse(block.rendered), [block.rendered]);
 
-export const CoreNavigation: FC<CoreNavigation> = ({ block }) => {
-  const parsed = parse(block.rendered);
+    const navElement = useMemo(() => {
+      if (!isValidElement<PropsWithChildren>(parsed)) return null;
+      return Children.toArray(parsed.props.children)[0];
+    }, [parsed]);
 
-  if (!isValidElement(parsed)) return null;
-  if (!parsed?.props.children) return null;
+    const links = useMemo(() => {
+      if (!isValidElement(navElement)) return null;
 
-  const navElement = Children.toArray(parsed.props.children)[0];
-  if (!navElement) return null;
-  if (!isValidElement(navElement)) return null;
+      return extractLinks(navElement);
+    }, [navElement]);
 
-  const classList = navElement.props?.className.split(' ') ?? [];
-  const isHeader = classList.includes('wp-header-navigation');
+    if (!isValidElement<PropsWithChildren<HTMLElement>>(navElement))
+      return null;
 
-  const links = extractLinks(navElement);
+    const classList = navElement?.props?.className.split(' ') ?? [];
+    const isHeader = classList.includes('wp-header-navigation');
 
-  const { fontSize, layout, style, textColor } = block.attrs;
-  const [color, shade] = textColor?.split('-') ?? '';
+    const { className, fontSize, layout, style, textColor } = block.attrs;
 
-  return isHeader ? (
-    <Navbar navItems={links} />
-  ) : (
-    <GutenbergBox layout={layout} style={style}>
-      {links.map((link) => (
-        <Typography
-          color={palette?.[color]?.[shade]}
-          component={Link}
-          href={link.href || ''}
-          key={link.href}
-          variant={fontSize}
-        >
-          {link.label}
-        </Typography>
-      ))}
-    </GutenbergBox>
-  );
-};
+    return isHeader ? (
+      <Navbar navItems={links ?? []} />
+    ) : (
+      <GutenbergBox className={className} layout={layout} style={style}>
+        {links?.map((link) => (
+          <Typography
+            color={getPaletteColor(textColor)}
+            component={Link}
+            href={link.href || ''}
+            key={link.href}
+            variant={fontSize}
+          >
+            {link.label}
+          </Typography>
+        ))}
+      </GutenbergBox>
+    );
+  },
+);

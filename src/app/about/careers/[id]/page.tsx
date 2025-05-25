@@ -1,4 +1,4 @@
-import { Template } from '@/components/Template';
+import { Page } from '@/components/wordpress/Page';
 import { getPost } from '@/services/getPost';
 import { generateSeo } from '@/utils/generateSeo';
 import { Metadata } from 'next';
@@ -31,5 +31,5 @@ export default async function Job({
 
   if (!job) return notFound();
 
-  return <Template post={job} />;
+  return <Page post={job} />;
 }

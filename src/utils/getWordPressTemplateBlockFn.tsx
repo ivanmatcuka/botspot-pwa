@@ -17,13 +17,13 @@ export function getWordPressTemplateBlockFn(
   const featuredImage = getFeaturedImageUrl(post);
 
   const map: Record<string, FC | null> = {
+    'core/post-content': (props: Omit<CorePostContentProps, 'blocks'>) => (
+      <CorePostContent blocks={post?.block_data ?? []} {...props} />
+    ),
     'core/post-title': ({ fontSize = 'h1', style }: Attrs) => (
       <Typography variant={fontSize} {...parseGutenbergSpacing(style?.spacing)}>
         {post?.title.rendered}
       </Typography>
-    ),
-    'core/post-content': (props: Omit<CorePostContentProps, 'blocks'>) => (
-      <CorePostContent blocks={post?.block_data ?? []} {...props} />
     ),
     'core/post-featured-image':
       featuredImage && post

@@ -1,7 +1,12 @@
-import { customUrl, Block } from '.';
-import { fetchEntity } from './fetchEntity';
+import { cache } from 'react';
 
-export const getTemplateParts = async () =>
-  await fetchEntity<Record<string, { blocks: Block[]; data: unknown }> | null>(
-    `${customUrl}/template-parts`,
-  );
+import { customUrl } from '.';
+import { fetchEntity } from './fetchEntity';
+import { Template } from './getTemplateBlocksBySlug';
+
+export const getTemplateParts = cache(
+  async () =>
+    await fetchEntity<Record<string, Template> | null>(
+      `${customUrl}/template-parts`,
+    ),
+);

@@ -1,4 +1,5 @@
 import { GutenbergBlocks } from '@/components/GutenbergBlocks';
+import { TemplatePart } from '@/components/wordpress/TemplatePart';
 import { getAreaBySlug } from '@/services/getAreaBySlug';
 import { getPost } from '@/services/getPost';
 import { generateSeo } from '@/utils/generateSeo';
@@ -44,6 +45,7 @@ export default async function Area({
 
   return (
     <main className="">
+      <TemplatePart slug="header" />
       {blocks && <GutenbergBlocks blocks={blocks} />}
 
       {post && (
@@ -55,6 +57,7 @@ export default async function Area({
           />
         </Suspense>
       )}
+      <TemplatePart slug="footer" />
     </main>
   );
 }

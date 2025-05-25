@@ -3,7 +3,8 @@
 import { Attrs } from '@/services';
 import { parseGutenbergBorders } from '@/utils/parseGutenbergBorders';
 import { parseGutenbergSpacing } from '@/utils/parseGutenbergSpacing';
-import { Box, palette } from '@botspot/ui';
+import { getPaletteColor } from '@/utils/parsePalette';
+import { Box } from '@botspot/ui';
 import { FC, PropsWithChildren } from 'react';
 
 export const GutenbergBox: FC<PropsWithChildren<Attrs>> = ({
@@ -29,17 +30,15 @@ export const GutenbergBox: FC<PropsWithChildren<Attrs>> = ({
   const { type: positionType, ...inset } = position ?? {};
 
   const borders = style?.border ? parseGutenbergBorders(style.border) : {};
-  const backgroundPaletteName = backgroundColor?.split('-') ?? '';
-
-  const bgColor = backgroundPaletteName[0] as keyof typeof palette;
-  const bgShade =
-    backgroundPaletteName[1] as keyof (typeof palette)[typeof bgColor];
 
   const flexDirection = orientation === 'vertical' ? 'column' : 'row';
 
+  const linkColorRaw = style?.elements?.link?.color?.text?.split('|').pop();
+  const linkColor = linkColorRaw ? getPaletteColor(linkColorRaw) : undefined;
+
   return (
     <Box
-      bgcolor={backgroundColor ? palette?.[bgColor]?.[bgShade] : undefined}
+      bgcolor={getPaletteColor(backgroundColor)}
       boxSizing="border-box"
       className={className}
       color={textColor === 'secondary' ? 'white' : undefined}
@@ -51,6 +50,7 @@ export const GutenbergBox: FC<PropsWithChildren<Attrs>> = ({
       margin={justifyContent === 'center' ? 'auto' : undefined}
       maxWidth={contentSize}
       position={positionType ?? 'static'}
+      sx={{ a: { color: linkColor } }}
       width={type === 'constrained' ? '100%' : undefined}
       {...spacings}
       {...borders}

@@ -1,7 +1,10 @@
 'use client';
 
 import { Border } from '@/services';
-import { palette } from '@botspot/ui';
+
+import { getPaletteColor } from './parsePalette';
+
+type BorderKey = keyof Border;
 
 export function parseGutenbergBorders(border: Border) {
   const directionMap = {
@@ -14,11 +17,7 @@ export function parseGutenbergBorders(border: Border) {
   const result: Record<string, unknown> = {};
 
   for (const side in border) {
-    const {
-      color,
-      style = 'solid',
-      width,
-    } = border[side as keyof Border] ?? {};
+    const { color, style = 'solid', width } = border[side as BorderKey] ?? {};
 
     if (width !== '0px') {
       let borderValue = `${width} ${style}`;
@@ -26,18 +25,10 @@ export function parseGutenbergBorders(border: Border) {
       if (color) {
         const resolvedColor = color.replace('var:preset|color|', '');
 
-        const borderPaletteName = resolvedColor?.split('-') ?? '';
-
-        const borderColor = borderPaletteName[0] as keyof typeof palette;
-        const borderShade =
-          borderPaletteName[1] as keyof (typeof palette)[typeof borderColor];
-
-        borderValue += ` ${
-          resolvedColor ? palette?.[borderColor]?.[borderShade] : undefined
-        }`;
+        if (resolvedColor) borderValue += ` ${getPaletteColor(resolvedColor)}`;
       }
 
-      result[directionMap[side as keyof Border]] = borderValue;
+      result[directionMap[side as BorderKey]] = borderValue;
     }
   }
 

@@ -14,7 +14,14 @@ const config: Config = {
     'z-[1201]',
     '!hidden',
     'md:!block',
+    'items-center',
     'flex-1',
+    '!flex-col',
+    'md:!flex-row',
+    'text-center',
+    'md:text-auto',
+    'mt-4',
+    'md:mt-0',
   ],
   theme: {
     extend: {
