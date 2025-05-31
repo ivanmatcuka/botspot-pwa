@@ -1,21 +1,23 @@
-import { Block } from '@/services';
-import { BlockSupports } from '@wordpress/blocks';
+'use client';
+
+import { Attrs, Block } from '@/services';
+import { attrsToMuiProps } from '@/utils/attrsToMuiProps';
+import { Box } from '@botspot/ui';
 import { FC } from 'react';
 
 import { GutenbergBlocks } from '../../GutenbergBlocks';
-import { GutenbergBox } from '../../GutenbergBox';
 
 export type CorePostContentProps = {
   blocks: Block[];
   className?: string;
-  style?: any;
-} & BlockSupports;
+} & Attrs;
 export const CorePostContent: FC<CorePostContentProps> = ({
   blocks,
-  className,
-  style,
-}) => (
-  <GutenbergBox className={className} style={style}>
-    <GutenbergBlocks blocks={blocks} />
-  </GutenbergBox>
-);
+  ...rest
+}) => {
+  return (
+    <Box display="flex" flexDirection="column" {...attrsToMuiProps(rest)}>
+      <GutenbergBlocks blocks={blocks} />
+    </Box>
+  );
+};

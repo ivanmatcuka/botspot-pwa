@@ -57,7 +57,7 @@ const nextConfig: NextConfig = {
         protocol: 'https',
       },
       {
-        hostname: 'botspot.matcuka.dev',
+        hostname: 'botspot.de',
         port: '',
         protocol: 'https',
       },

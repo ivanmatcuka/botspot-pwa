@@ -1,9 +1,15 @@
-import { CustomPost } from '@botspot/ui';
+import { Product } from '@/wordpress/component-map';
 
-import { baseUrl, Block } from '.';
+import { customUrl } from '.';
 import { fetchCollection } from './fetchCollection';
 
-export const getProducts = () =>
-  fetchCollection<CustomPost<Block>>(
-    `${baseUrl}/product?&per_page=100&acf_format=standard`,
+export const getProducts = async () => {
+  const { count, data } = await fetchCollection<Product>(
+    `${customUrl}/flat-posts?type=product`,
   );
+
+  return {
+    count,
+    data,
+  };
+};

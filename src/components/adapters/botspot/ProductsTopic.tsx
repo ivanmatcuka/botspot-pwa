@@ -6,6 +6,8 @@ import { useSearchParams } from 'next/navigation';
 import { ComponentProps, FC, Suspense } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { mapProps } from './ProductsList';
+
 const ProductsTopicWrapper: FC<ComponentProps<typeof botspot.ProductsTopic>> = (
   props,
 ) => {
@@ -13,11 +15,20 @@ const ProductsTopicWrapper: FC<ComponentProps<typeof botspot.ProductsTopic>> = (
   const searchParams = useSearchParams();
   const search = searchParams.get('default') ?? props.defaultProductName;
 
+  // Wrap getProducts to map the product props as needed
+  const getProductsMapped = async () => {
+    const { count, data } = await getProducts();
+    return {
+      count,
+      data: data.map(mapProps),
+    };
+  };
+
   return (
     <botspot.ProductsTopic
       {...props}
       defaultProductName={search}
-      getProducts={getProducts}
+      getProducts={getProductsMapped}
       onChange={(topic) => setValue?.('your-topic', topic)}
     />
   );

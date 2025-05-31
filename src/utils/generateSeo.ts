@@ -1,10 +1,10 @@
-import { CustomPost } from '@botspot/ui';
+import { BasePost } from '@/wordpress/component-map';
 import { Metadata } from 'next';
 import { Robots } from 'next/dist/lib/metadata/types/metadata-types';
 import { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types';
 import { Twitter } from 'next/dist/lib/metadata/types/twitter-types';
 
-export const generateSeo = (post: CustomPost) => {
+export const generateSeo = (post: { yoast_head_json?: any } & BasePost) => {
   const yoast = post.yoast_head_json;
   const graph = yoast?.schema?.['@graph']?.[0];
 
@@ -34,7 +34,7 @@ export const generateSeo = (post: CustomPost) => {
         } as Twitter,
       }
     : {
-        title: `${post.title.rendered} – botspot`,
+        title: `${post.flat_title} – botspot`,
       };
 
   return result;

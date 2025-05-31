@@ -2,15 +2,16 @@
 
 import { CustomPost } from '@botspot/ui';
 
-import { baseUrl, Block } from '../services';
+import { Block, customUrl } from '../services';
 import { fetchCollection } from '../services/fetchCollection';
-import { getCategory } from '../services/getCategory';
 
 export const getPosts = async (page = 1, perPage = 12) => {
-  const category = await getCategory('3d-academy');
-  if (!category) return { count: 0, data: [] };
-
-  return fetchCollection<CustomPost<Block>>(
-    `${baseUrl}/posts?orderby=modified&per_page=${perPage}&page=${page}&categories=${category.id}&_embed`,
+  const { count, data } = await fetchCollection<CustomPost<Block>>(
+    `${customUrl}/flat-posts?orderby=modified&per_page=${perPage}&page=${page}&category=3d-academy`,
   );
+
+  return {
+    count,
+    data,
+  };
 };

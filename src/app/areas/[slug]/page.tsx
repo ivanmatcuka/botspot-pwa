@@ -1,9 +1,8 @@
 import { AttachedPost } from '@/components/AttachedPost';
 import { GutenbergBlocks } from '@/components/GutenbergBlocks';
 import { getAreaBySlug } from '@/services/getAreaBySlug';
-import { getPost } from '@/services/getPost';
+import { getPostBySlug } from '@/services/getPostBySlug';
 import { generateSeo } from '@/utils/generateSeo';
-import { getFeaturedImageUrl } from '@/utils/getFeaturedImageUrl';
 import { TemplatePart } from '@/wordpress/TemplatePart';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -36,23 +35,24 @@ export default async function Area({
 
   if (!area) return notFound();
 
-  const { acf, block_data: blocks } = area;
-  const { post: postId, 'post-cta': postCta } = acf ?? {};
+  const { blocks, info } = area;
+  const { post, 'post-cta': postCta } = info ?? {};
 
-  const post = postId ? await getPost(+String(postId)) : null;
-  const relatedImage = getFeaturedImageUrl(post ?? undefined);
+  const postBySlug = post?.post_name
+    ? await getPostBySlug(post.post_name)
+    : null;
 
   return (
     <main className="">
       <TemplatePart slug="header" />
       {blocks && <GutenbergBlocks blocks={blocks} />}
 
-      {post && (
+      {postBySlug && (
         <Suspense>
           <AttachedPost
-            post={post}
+            post={postBySlug}
             postCta={postCta}
-            relatedImage={relatedImage}
+            relatedImage={postBySlug?.featured_image ?? ''}
           />
         </Suspense>
       )}

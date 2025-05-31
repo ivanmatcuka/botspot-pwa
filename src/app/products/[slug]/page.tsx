@@ -4,7 +4,6 @@ import { GutenbergBlocks } from '@/components/GutenbergBlocks';
 import { getPost } from '@/services/getPost';
 import { getProductBySlug } from '@/services/getProductBySlug';
 import { generateSeo } from '@/utils/generateSeo';
-import { getFeaturedImageUrl } from '@/utils/getFeaturedImageUrl';
 import { TemplatePart } from '@/wordpress/TemplatePart';
 import { CustomFields } from '@botspot/ui';
 import { Banner, MainBlock, MediaBlock, PageContainer } from '@botspot/ui';
@@ -42,7 +41,7 @@ export default async function Product({
   const product = await getProductBySlug(slug);
   if (!product) return notFound();
 
-  const blocks = product.block_data;
+  const blocks = product.blocks;
 
   const {
     banner,
@@ -58,22 +57,21 @@ export default async function Product({
     'post-cta': postCta = POST_CTA_DEFAULT,
     'second-headline': secondHeadline,
     'second-subline': secondSubline,
-  }: Partial<CustomFields> = product.acf ?? {};
+  }: Partial<CustomFields> = product.info ?? {};
 
   const post = postId ? await getPost(+String(postId)) : null;
-  const relatedImage = getFeaturedImageUrl(post ?? undefined);
 
   return (
     <main className="">
       <TemplatePart slug="header" />
       {banner && (
         <Banner
-          headline={product.title.rendered}
+          headline={product.flat_title || ''}
           mediaBlockOptions={{ assetUrl: banner }}
-          sublineElement={product.excerpt.rendered}
+          sublineElement={product.flat_excerpt || ''}
         >
           <Button
-            href={`${downloadUrl}?default=${product.title.rendered}`}
+            href={`${downloadUrl}?default=${product.flat_excerpt || ''}`}
             variant="primary"
           >
             {downloadCta}
@@ -117,7 +115,7 @@ export default async function Product({
           <AttachedPost
             post={post}
             postCta={postCta}
-            relatedImage={relatedImage}
+            relatedImage={product.featured_image || ''}
           />
         </Suspense>
       )}

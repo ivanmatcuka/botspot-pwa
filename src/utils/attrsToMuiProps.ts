@@ -53,7 +53,7 @@ export const attrsToMuiProps = (attrs: Attrs) => {
   const muiFontSize = typography?.fontSize || fontSize;
   const muiFontFamily = typography?.fontFamily || fontFamily;
   const muiLineHeight = typography?.lineHeight || lineHeight;
-  //   const muiTextTransform = typography?.textTransform;
+  const muiTextTransform = typography?.textTransform;
 
   // Color
   const color =
@@ -63,7 +63,7 @@ export const attrsToMuiProps = (attrs: Attrs) => {
   const minHeight = dimensions?.minHeight;
 
   // Compose props
-  return {
+  const props = {
     bgcolor: getPaletteColor(backgroundColor),
     boxSizing: 'border-box',
     className,
@@ -71,7 +71,6 @@ export const attrsToMuiProps = (attrs: Attrs) => {
     display: isFlex ? 'flex' : undefined,
     flexWrap: isFlex ? flexWrap : undefined,
     fontFamily: muiFontFamily,
-    fontSize: muiFontSize,
     gap,
     height,
     justifyContent,
@@ -81,14 +80,30 @@ export const attrsToMuiProps = (attrs: Attrs) => {
     minHeight,
     position: positionType ?? 'static',
     sx: linkColor ? { a: { color: linkColor } } : undefined,
-    // textTransform: muiTextTransform,
+    textTransform: muiTextTransform,
     width: type === 'constrained' ? '100%' : width,
     flexDirection: (isFlex ? flexDirection : undefined) as
       | 'row'
       | 'column'
       | undefined,
+    fontSize: muiFontSize as
+      | 'body1'
+      | 'button'
+      | 'caption'
+      | 'h1'
+      | 'h2'
+      | 'h3'
+      | 'h4'
+      | 'h5'
+      | undefined,
     ...spacings,
     ...borders,
     ...inset,
-  } as const;
+    // ...rest,
+  };
+
+  // Remove undefined fields
+  return Object.fromEntries(
+    Object.entries(props).filter(([, v]) => v !== undefined),
+  );
 };

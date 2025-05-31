@@ -17,7 +17,7 @@ export const generatePageMetadata = async (
 
   return (
     generateSeo(page) ?? {
-      title: `${page.title.rendered} – botspot`,
+      title: `${page.flat_title} – botspot`,
     }
   );
 };

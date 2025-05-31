@@ -1,15 +1,11 @@
-import { WP_REST_API_Page } from 'wp-types';
+import { BasePost } from '@/wordpress/component-map';
 
-import { baseUrl, Block } from '.';
+import { customUrl } from '.';
 import { fetchEntity } from './fetchEntity';
 
-export type PageResponse = {
-  block_data: Block[];
-  has_blocks: true;
-} & WP_REST_API_Page;
 export const getPage = async (slug: string) => {
-  const data = await fetchEntity<PageResponse[]>(
-    `${baseUrl}/pages?slug=${slug}&_embed`,
+  const data = await fetchEntity<BasePost[]>(
+    `${customUrl}/flat-posts?slug=${slug}&type=page`,
   );
 
   return data?.[0] ?? null;

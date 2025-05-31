@@ -1,4 +1,4 @@
-import { getPost } from '@/services/getPost';
+import { getPostBySlug } from '@/services/getPostBySlug';
 import { generateSeo } from '@/utils/generateSeo';
 import { Page } from '@/wordpress/Page';
 import { Metadata } from 'next';
@@ -11,10 +11,10 @@ const DEFAULT_META = {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const id = (await params).id;
-  const job = await getPost(+id);
+  const slug = (await params).slug;
+  const job = await getPostBySlug(slug);
 
   if (!job) return DEFAULT_META;
 
@@ -24,10 +24,10 @@ export async function generateMetadata({
 export default async function Job({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }) {
-  const id = (await params).id;
-  const job = await getPost(+id);
+  const slug = (await params).slug;
+  const job = await getPostBySlug(slug);
 
   if (!job) return notFound();
 

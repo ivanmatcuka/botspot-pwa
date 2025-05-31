@@ -1,13 +1,12 @@
-import { Attrs, Block } from '@/services';
-import { getFeaturedImageUrl } from '@/utils/getFeaturedImageUrl';
-import { CustomPost } from '@botspot/ui';
+import { Attrs } from '@/services';
+import { BasePost } from '@/wordpress/component-map';
 import Image from 'next/image';
 import { FC } from 'react';
 
 import { GutenbergBox } from '../../GutenbergBox';
 
 export type CorePostFeaturedImageProps = {
-  post: CustomPost<Block>;
+  post: BasePost;
 } & Attrs;
 export const CorePostFeaturedImage: FC<CorePostFeaturedImageProps> = ({
   className,
@@ -17,16 +16,14 @@ export const CorePostFeaturedImage: FC<CorePostFeaturedImageProps> = ({
   style,
   width = '100',
 }) => {
-  const featuredImage = getFeaturedImageUrl(post);
-
   return (
     <GutenbergBox style={style}>
       <Image
-        alt={featuredImage}
+        alt={post.flat_title ?? ''}
         className={className}
         height={parseInt(height)}
         rel={rel ?? ''}
-        src={featuredImage}
+        src={post.featured_image ?? ''}
         width={parseInt(width)}
       />
     </GutenbergBox>
