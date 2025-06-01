@@ -4,13 +4,14 @@ import './globals.scss';
 
 import type { Metadata } from 'next';
 
-import { Box, SnackbarProvider, ThemeRegistry } from '@botspot/ui';
+import { WordPressThemeProvider } from '@/components/WordPressThemeProvider';
+import { Box, SnackbarProvider } from '@botspot/ui';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { GoogleTagManager } from '@next/third-parties/google';
-import { Poppins } from 'next/font/google';
 import Script from 'next/script';
 import NextTopLoader from 'nextjs-toploader';
 import { ReactNode } from 'react';
+import { Poppins } from 'next/font/google';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -52,12 +53,12 @@ export default async function RootLayout({
       )}
       <body className={`${poppins.className} flex flex-col min-h-screen`}>
         <AppRouterCacheProvider>
-          <ThemeRegistry>
+          <WordPressThemeProvider>
             <SnackbarProvider>
               <NextTopLoader />
               <Box className="flex-1 flex flex-col">{children}</Box>
             </SnackbarProvider>
-          </ThemeRegistry>
+          </WordPressThemeProvider>
         </AppRouterCacheProvider>
       </body>
     </html>
