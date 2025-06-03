@@ -1,7 +1,7 @@
 import { palette } from '@botspot/ui';
 
 type HueKey = keyof typeof palette;
-type ShadeKey = keyof (typeof palette)[HueKey];
+type ShadeKey = keyof (typeof palette)[HueKey]; // dis dumb
 
 export const parsePalette = (color?: string): [HueKey, ShadeKey] | null => {
   if (!color) return null;
@@ -16,7 +16,7 @@ export const parsePalette = (color?: string): [HueKey, ShadeKey] | null => {
 
 export const getPaletteColor = (color?: string) => {
   const [hue, shade] = parsePalette(color) ?? [];
-  if (!hue || !shade) return;
+  if (!hue) return;
 
-  return palette[hue]?.[shade];
+  return palette[hue]?.[(shade ?? 'main') as ShadeKey];
 };

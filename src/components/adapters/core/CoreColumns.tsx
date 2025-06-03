@@ -26,7 +26,11 @@ export const CoreColumn: FC<PropsWithChildren<Attrs>> = ({
   const matches = useMediaQuery(breakpoints.up('xl'));
 
   return (
-    <Grid {...attrsToMuiProps(attrs)} width={matches ? width : '100%'} item>
+    <Grid
+      {...attrsToMuiProps(attrs)}
+      width={matches ? width || '50%' : '100%'}
+      item
+    >
       {children}
     </Grid>
   );

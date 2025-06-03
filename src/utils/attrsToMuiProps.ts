@@ -5,6 +5,18 @@ import { parseGutenbergBorders } from '@/utils/parseGutenbergBorders';
 import { parseGutenbergSpacing } from '@/utils/parseGutenbergSpacing';
 import { getPaletteColor } from '@/utils/parsePalette';
 
+type FontSize =
+  | 'body1'
+  | 'button'
+  | 'caption'
+  | 'h1'
+  | 'h2'
+  | 'h3'
+  | 'h4'
+  | 'h5'
+  | undefined;
+
+type FlexDirection = 'row' | 'column' | undefined;
 /**
  * Transforms a Gutenberg block Attrs object into MUI Box-compatible props.
  * This includes spacing, borders, palette, layout, and other style props.
@@ -13,7 +25,7 @@ export const attrsToMuiProps = (attrs: Attrs) => {
   const {
     backgroundColor,
     className,
-    fontFamily,
+    // fontFamily,
     fontSize,
     height,
     layout,
@@ -51,13 +63,13 @@ export const attrsToMuiProps = (attrs: Attrs) => {
 
   // Typography
   const muiFontSize = typography?.fontSize || fontSize;
-  const muiFontFamily = typography?.fontFamily || fontFamily;
+  // const muiFontFamily = typography?.fontFamily || fontFamily;
   const muiLineHeight = typography?.lineHeight || lineHeight;
   const muiTextTransform = typography?.textTransform;
 
   // Color
-  const color =
-    textColor === 'secondary' ? 'white' : getPaletteColor(textColor);
+  // const color = getPaletteColor(textColor);
+  const color = getPaletteColor(textColor);
 
   // Dimensions
   const minHeight = dimensions?.minHeight;
@@ -65,12 +77,14 @@ export const attrsToMuiProps = (attrs: Attrs) => {
   // Compose props
   const props = {
     bgcolor: getPaletteColor(backgroundColor),
-    boxSizing: 'border-box',
+    // boxSizing: 'border-box',
     className,
     color,
     display: isFlex ? 'flex' : undefined,
+    flexDirection: (isFlex ? flexDirection : undefined) as FlexDirection,
     flexWrap: isFlex ? flexWrap : undefined,
-    fontFamily: muiFontFamily,
+    fontSize: muiFontSize as FontSize,
+    // fontFamily: muiFontFamily,
     gap,
     height,
     justifyContent,
@@ -82,20 +96,6 @@ export const attrsToMuiProps = (attrs: Attrs) => {
     sx: linkColor ? { a: { color: linkColor } } : undefined,
     textTransform: muiTextTransform,
     width: type === 'constrained' ? '100%' : width,
-    flexDirection: (isFlex ? flexDirection : undefined) as
-      | 'row'
-      | 'column'
-      | undefined,
-    fontSize: muiFontSize as
-      | 'body1'
-      | 'button'
-      | 'caption'
-      | 'h1'
-      | 'h2'
-      | 'h3'
-      | 'h4'
-      | 'h5'
-      | undefined,
     ...spacings,
     ...borders,
     ...inset,

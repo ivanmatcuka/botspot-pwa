@@ -16,7 +16,12 @@ export const CorePostContent: FC<CorePostContentProps> = ({
   ...rest
 }) => {
   return (
-    <Box display="flex" flexDirection="column" {...attrsToMuiProps(rest)}>
+    <Box
+      display="flex"
+      flex={1}
+      flexDirection="column"
+      {...attrsToMuiProps(rest)}
+    >
       <GutenbergBlocks blocks={blocks} />
     </Box>
   );

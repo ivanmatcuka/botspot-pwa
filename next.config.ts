@@ -61,6 +61,11 @@ const nextConfig: NextConfig = {
         port: '',
         protocol: 'https',
       },
+      {
+        hostname: 'assets-global.website-files.com',
+        port: '',
+        protocol: 'https',
+      },
     ],
   },
   sassOptions: {
