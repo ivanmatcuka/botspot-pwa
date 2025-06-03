@@ -71,7 +71,7 @@ export default async function Product({
           sublineElement={product.flat_excerpt || ''}
         >
           <Button
-            href={`${downloadUrl}?default=${product.flat_excerpt || ''}`}
+            href={`${downloadUrl}?default=${product.flat_title || ''}`}
             variant="primary"
           >
             {downloadCta}
