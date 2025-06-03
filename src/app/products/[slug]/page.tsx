@@ -67,7 +67,7 @@ export default async function Product({
       {banner && (
         <Banner
           headline={product.flat_title || ''}
-          mediaBlockOptions={{ assetUrl: banner }}
+          mediaBlockOptions={{ assetUrl: banner, banner: true }}
           sublineElement={product.flat_excerpt || ''}
         >
           <Button
@@ -102,7 +102,7 @@ export default async function Product({
         <MainBlock headline={firstHeadline} subline={firstSubline} />
       </PageContainer>
 
-      <MediaBlock assetUrl={closeup} objectFit="cover" fullHeight />
+      <MediaBlock assetUrl={closeup} objectFit="cover" banner fullHeight />
 
       <PageContainer mt={{ md: 15, xs: 10 }}>
         <MainBlock headline={secondHeadline} subline={secondSubline} />
