@@ -3,7 +3,7 @@
 import { getProducts } from '@/services/getProducts';
 import * as botspot from '@botspot/ui';
 import { useSearchParams } from 'next/navigation';
-import { ComponentProps, FC, Suspense } from 'react';
+import { ComponentProps, FC, Suspense, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { mapProps } from './ProductsList';
@@ -14,21 +14,21 @@ const ProductsTopicWrapper: FC<ComponentProps<typeof botspot.ProductsTopic>> = (
   const { setValue } = useFormContext() ?? {};
   const searchParams = useSearchParams();
   const search = searchParams.get('default') ?? props.defaultProductName;
+  const [products, setProducts] = useState<botspot.CustomPost[]>([]);
+  const [count, setCount] = useState<number>(0);
 
-  // Wrap getProducts to map the product props as needed
-  const getProductsMapped = async () => {
-    const { count, data } = await getProducts();
-    return {
-      count,
-      data: data.map(mapProps),
-    };
-  };
+  useEffect(() => {
+    getProducts().then(({ count, data }) => {
+      setProducts(data.map(mapProps));
+      setCount(count);
+    });
+  }, []);
 
   return (
     <botspot.ProductsTopic
       {...props}
       defaultProductName={search}
-      getProducts={getProductsMapped}
+      getProducts={async () => ({ count, data: products })}
       onChange={(topic) => setValue?.('your-topic', topic)}
     />
   );
