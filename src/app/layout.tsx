@@ -49,6 +49,10 @@ export default async function RootLayout({
             {`window.varify = window.varify || {}; window.varify.iid = ${process.env.NEXT_PUBLIC_VARIFY_ID};`}
           </Script>
           <Script src="https://app.varify.io/varify.js" />
+          <Script
+            id="chatway"
+            src="https://cdn.chatway.app/widget.js?id=VgNePrkDETb0"
+          />
         </head>
       )}
       <body className={`${poppins.className} flex flex-col min-h-screen`}>
