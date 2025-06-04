@@ -40,6 +40,8 @@ const BOTSPOT_COMPONENT_MAP: Partial<ComponentMap> = {
   'ui/main-block': botspot.MainBlock,
   'ui/media-block': botspot.MediaBlock,
   'ui/page-container': botspot.PageContainer,
+  'ui/partner-logo': botspot.PartnerLogo,
+  'ui/partner-logo-container': botspot.PartnerLogoContainer,
   'ui/people': People,
   'ui/posts': Posts,
   'ui/products-list': ProductsList,
