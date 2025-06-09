@@ -4,6 +4,7 @@ import './globals.scss';
 
 import type { Metadata } from 'next';
 
+import { Hotjar } from '@/components/Hotjar';
 import { WordPressThemeProvider } from '@/components/WordPressThemeProvider';
 import { Box, SnackbarProvider } from '@botspot/ui';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
@@ -51,6 +52,7 @@ export default async function RootLayout({
             {`window.varify = window.varify || {}; window.varify.iid = ${VARIFY_ID};`}
           </Script>
           <Script src="https://app.varify.io/varify.js" />
+          <Hotjar />
         </head>
       )}
       <body className={`${poppins.className} flex flex-col min-h-screen`}>
