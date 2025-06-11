@@ -7,7 +7,7 @@ export const HubSpot = () => {
 
   return (
     <Script
-      id="hubspot"
+      id="hs-script-loader"
       src={`//js-eu1.hs-scripts.com/${HUBSPOT_ID}.js`}
       type="text/javascript"
       async
