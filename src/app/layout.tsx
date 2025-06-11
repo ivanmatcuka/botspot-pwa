@@ -54,7 +54,6 @@ export default async function RootLayout({
           </Script>
           <Script src="https://app.varify.io/varify.js" />
           <Hotjar />
-          <HubSpot />
         </head>
       )}
       <body className={`${poppins.className} flex flex-col min-h-screen`}>
@@ -66,6 +65,7 @@ export default async function RootLayout({
             </SnackbarProvider>
           </WordPressThemeProvider>
         </AppRouterCacheProvider>
+        {process.env.nodeEnv === 'production' && <HubSpot />}
       </body>
     </html>
   );
