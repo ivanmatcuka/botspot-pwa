@@ -5,7 +5,6 @@ import './globals.scss';
 import type { Metadata } from 'next';
 
 import { Hotjar } from '@/components/Hotjar';
-import { HubSpot } from '@/components/HubSpot';
 import { WordPressThemeProvider } from '@/components/WordPressThemeProvider';
 import { Box, SnackbarProvider } from '@botspot/ui';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
@@ -38,7 +37,6 @@ export const metadata: Metadata = {
 };
 
 const VARIFY_ID = process.env.NEXT_PUBLIC_VARIFY_ID;
-const HUBSPOT_ID = process.env.NEXT_PUBLIC_HUBSPOT_ID;
 
 export default async function RootLayout({
   children,
@@ -66,14 +64,6 @@ export default async function RootLayout({
             </SnackbarProvider>
           </WordPressThemeProvider>
         </AppRouterCacheProvider>
-        <Script
-          id="hs-script-loader"
-          src={`//js-eu1.hs-scripts.com/${HUBSPOT_ID}.js`}
-          strategy="beforeInteractive"
-          type="text/javascript"
-          async
-          defer
-        />
       </body>
     </html>
   );
