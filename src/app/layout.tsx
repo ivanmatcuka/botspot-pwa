@@ -38,6 +38,7 @@ export const metadata: Metadata = {
 };
 
 const VARIFY_ID = process.env.NEXT_PUBLIC_VARIFY_ID;
+const HUBSPOT_ID = process.env.NEXT_PUBLIC_HUBSPOT_ID;
 
 export default async function RootLayout({
   children,
@@ -65,7 +66,14 @@ export default async function RootLayout({
             </SnackbarProvider>
           </WordPressThemeProvider>
         </AppRouterCacheProvider>
-        {process.env.nodeEnv === 'production' && <HubSpot />}
+        <Script
+          id="hs-script-loader"
+          src={`//js-eu1.hs-scripts.com/${HUBSPOT_ID}.js`}
+          strategy="beforeInteractive"
+          type="text/javascript"
+          async
+          defer
+        />
       </body>
     </html>
   );

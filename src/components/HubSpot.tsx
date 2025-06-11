@@ -9,6 +9,7 @@ export const HubSpot = () => {
     <Script
       id="hs-script-loader"
       src={`//js-eu1.hs-scripts.com/${HUBSPOT_ID}.js`}
+      strategy="beforeInteractive"
       type="text/javascript"
       async
       defer
