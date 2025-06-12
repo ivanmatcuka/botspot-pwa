@@ -1,8 +1,8 @@
-import { BasePost } from '@/wordpress/component-map';
 /**
- * This ocmponent is meant to make it easy to attach a post
+ * This component is meant to make it easy to attach a post
  * to an Area or a Product via WordPress CMS.
  */
+import { BasePost } from '@/wordpress/component-map';
 import { GalleryTile, SecondaryBlock } from '@botspot/ui';
 import { FC } from 'react';
 
