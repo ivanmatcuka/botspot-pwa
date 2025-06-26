@@ -2,12 +2,6 @@ import { GutenbergBlocks } from '@/components/GutenbergBlocks';
 import { getTemplateParts } from '@/services/getTemplateParts';
 import { FC, PropsWithChildren } from 'react';
 
-export const TEMPLATE_BLOCKS = [
-  'core/post-content',
-  'core/post-title',
-  'core/post-featured-image',
-];
-
 type TemplatePartProps = {
   slug: string;
 };

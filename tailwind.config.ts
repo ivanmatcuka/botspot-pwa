@@ -13,7 +13,7 @@ const config: Config = {
     'object-contain',
     'z-[1201]',
     '!hidden',
-    'md:!block',
+    'xl:!block',
     'items-center',
     'flex-1',
     '!flex-col',

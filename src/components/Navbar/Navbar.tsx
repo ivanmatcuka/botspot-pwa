@@ -1,5 +1,6 @@
 'use client';
 
+import { TemplatePartClient } from '@/wordpress/TemplatePartClient';
 import {
   Box,
   Drawer,
@@ -11,7 +12,7 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
 import { usePathname } from 'next/navigation';
-import { FC, memo, useState } from 'react';
+import { FC, useState } from 'react';
 
 import { NavbarDrawer } from './NavbarDrawer';
 import { NavbarMenu } from './NavbarMenu';
@@ -27,7 +28,7 @@ type MenuItem = {
 type NavbarProps = {
   navItems: MenuItem[];
 };
-export const Navbar: FC<NavbarProps> = memo(function Navbar({ navItems }) {
+export const Navbar: FC<NavbarProps> = ({ navItems }) => {
   const currentPath = usePathname();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -69,8 +70,16 @@ export const Navbar: FC<NavbarProps> = memo(function Navbar({ navItems }) {
               onOpen={() => setIsOpen(false)}
             />
           ))}
+          <Box
+            display="flex"
+            justifyContent="center"
+            p={2}
+            sx={{ a: { display: 'block !important' } }}
+          >
+            <TemplatePartClient slug="contact-button" />
+          </Box>
         </List>
       </Drawer>
     </Box>
   );
-});
+};
