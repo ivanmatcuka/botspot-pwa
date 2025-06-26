@@ -1,29 +1,14 @@
-'use client';
+import { FC, PropsWithChildren } from 'react';
 
-import { GutenbergBlocks } from '@/components/GutenbergBlocks';
-import { Template } from '@/services/getTemplateBlocksBySlug';
-import { getTemplateParts } from '@/services/getTemplateParts';
-import { FC, PropsWithChildren, useEffect, useState } from 'react';
+import { useTemplateParts } from './TemplatePartsProvider';
 
 type TemplatePartClientProps = {
   slug: string;
 };
-export const TemplatePartClient: FC<
-  PropsWithChildren<TemplatePartClientProps>
-> = ({ slug }) => {
-  const [templateParts, setTemplateParts] =
-    useState<Record<string, Template>>();
-  const templatePart = templateParts?.[slug];
+export const TemplatePart: FC<PropsWithChildren<TemplatePartClientProps>> = ({
+  slug,
+}) => {
+  const templateParts = useTemplateParts();
 
-  useEffect(() => {
-    getTemplateParts().then((result) => setTemplateParts(result ?? {}));
-  }, []);
-
-  if (!templateParts) return;
-  if (!templatePart) {
-    console.warn('Template part not found: ' + slug);
-    return null;
-  }
-
-  return <GutenbergBlocks blocks={templatePart.blocks} />;
+  return templateParts[slug];
 };

@@ -5,6 +5,8 @@ import './globals.scss';
 import type { Metadata } from 'next';
 
 import { WordPressThemeProvider } from '@/components/WordPressThemeProvider';
+import { getTemplateParts } from '@/services/getTemplateParts';
+import { TemplatePartsProvider } from '@/wordpress/TemplatePartsProvider';
 import { Box, SnackbarProvider } from '@botspot/ui';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { GoogleTagManager } from '@next/third-parties/google';
@@ -42,6 +44,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
+  const templateParts = await getTemplateParts();
+
   return (
     <html lang="en">
       {process.env.nodeEnv === 'production' && (
@@ -57,10 +61,12 @@ export default async function RootLayout({
       <body className={`${poppins.className} flex flex-col min-h-screen`}>
         <AppRouterCacheProvider>
           <WordPressThemeProvider>
-            <SnackbarProvider>
-              <NextTopLoader />
-              <Box className="flex-1 flex flex-col">{children}</Box>
-            </SnackbarProvider>
+            <TemplatePartsProvider templateParts={templateParts ?? {}}>
+              <SnackbarProvider>
+                <NextTopLoader />
+                <Box className="flex-1 flex flex-col">{children}</Box>
+              </SnackbarProvider>
+            </TemplatePartsProvider>
           </WordPressThemeProvider>
         </AppRouterCacheProvider>
       </body>

@@ -1,6 +1,6 @@
 'use client';
 
-import { TemplatePartClient } from '@/wordpress/TemplatePartClient';
+import { TemplatePart } from '@/wordpress/TemplatePartClient';
 import {
   Box,
   Drawer,
@@ -76,7 +76,7 @@ export const Navbar: FC<NavbarProps> = ({ navItems }) => {
             p={2}
             sx={{ a: { display: 'block !important' } }}
           >
-            <TemplatePartClient slug="contact-button" />
+            <TemplatePart slug="contact-button" />
           </Box>
         </List>
       </Drawer>
