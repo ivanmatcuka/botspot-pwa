@@ -78,6 +78,7 @@ export type Attrs = {
   slug?: string;
 
   tagName?: string;
+  textAlign?: 'left' | 'right' | 'center' | 'justify' | string;
   textColor?: string;
   url?: string;
 

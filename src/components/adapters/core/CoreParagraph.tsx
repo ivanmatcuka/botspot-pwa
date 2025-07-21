@@ -33,6 +33,7 @@ export const CoreParagraph: FC<Attrs> = ({
   return (
     <botspot.Typography
       dangerouslySetInnerHTML={{ __html: content ?? '' }}
+      textAlign={attrs.textAlign as 'left' | 'right' | 'center' | 'justify'}
       variant={variant}
       {...attrsToMuiProps(attrs)}
     />
